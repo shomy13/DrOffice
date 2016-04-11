@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\dev2\Documents\Shomy\DrOffice\Ordination\Ordination\App.xaml
-11151548125
+6953483006
 
-9-757842545
+12-1251886123
 13738642453
-MainWindow.xaml;
+LogIn.xaml;View\Admin\AddDoctorView.xaml;View\Admin\AdminView.xaml;View\Admin\AdminViewResources.xaml;View\User\UserViewResources.xaml;View\User\UserView.xaml;
 
-True
+False
 

@@ -1,0 +1,59 @@
+﻿<Window x:Class="Ordination.View.User.UserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Doctor" Height="750" Width="1333" WindowStartupLocation="CenterScreen"
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="UserViewResources.xaml"/>
+    </Window.Resources>
+    
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
+            <Menu KeyboardNavigation.TabNavigation="Cycle" FontSize="14" Background="AliceBlue" Foreground="Blue">
+                <MenuItem Header="_Patient">
+                    <MenuItem Header="Add _new patient"/>
+                    <MenuItem Header="_List of patients"/>
+                </MenuItem>
+                <MenuItem Header="_Doctor">
+                    <MenuItem Header ="_Profile"/>
+                    <MenuItem Header="_Change">
+                        <MenuItem Header="_Password"/>
+                    </MenuItem>
+                    <MenuItem Header="_LogOut"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Width="Auto" 
+                    Grid.Column="0" 
+                   Style="{StaticResource BorderStyle}"
+                    >
+                <StackPanel Margin="5,10">
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                        <TextBlock>List of<LineBreak/>patients</TextBlock>
+                    </Button>
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                        <TextBlock>Add new<LineBreak/>patient</TextBlock>
+                    </Button>
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                        <TextBlock>List of all<LineBreak/>appointments</TextBlock>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Width="Auto" Style="{StaticResource BorderStyle}">
+                <ContentControl>
+                    
+                </ContentControl>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
