@@ -55,11 +55,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Admin\AddDoctorView.xaml.cs">
       <DependentUpon>AddDoctorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\AllDoctorsView.xaml.cs">
+      <DependentUpon>AllDoctorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ChangePasswordView.xaml.cs">
+      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AddAppointmentView.xaml.cs">
+      <DependentUpon>AddAppointmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AddPatientView.xaml.cs">
+      <DependentUpon>AddPatientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AllAppointmentsView.xaml.cs">
+      <DependentUpon>AllAppointmentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AllPatientsView.xaml.cs">
+      <DependentUpon>AllPatientsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AppointmentView.xaml.cs">
+      <DependentUpon>AppointmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\DoctorView.xaml.cs">
+      <DependentUpon>DoctorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\PatientView.xaml.cs">
+      <DependentUpon>PatientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\UserChangePassword.xaml.cs">
+      <DependentUpon>UserChangePassword.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\User\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
@@ -87,6 +119,46 @@
     <Page Include="View\Admin\AdminViewResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\AllDoctorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ChangePasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AddAppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AddPatientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AllAppointmentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AllPatientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\DoctorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\PatientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\UserChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\User\UserViewResources.xaml">
       <SubType>Designer</SubType>
@@ -126,7 +198,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
+    <Folder Include="ViewModel\Admin\" />
+    <Folder Include="ViewModel\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
