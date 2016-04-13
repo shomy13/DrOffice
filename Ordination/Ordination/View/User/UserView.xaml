@@ -14,15 +14,15 @@
         <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
             <Menu KeyboardNavigation.TabNavigation="Cycle" FontSize="14" Background="AliceBlue" Foreground="Blue">
                 <MenuItem Header="_Patient">
-                    <MenuItem Header="Add _new patient"/>
-                    <MenuItem Header="_List of patients"/>
+                    <MenuItem Header="Add _new patient" Command="{Binding AddNewPatient}"/>
+                    <MenuItem Header="_List of patients" Command="{Binding ReturnAllPatients}"/>
                 </MenuItem>
                 <MenuItem Header="_Doctor">
-                    <MenuItem Header ="_Profile"/>
+                    <MenuItem Header ="_Profile" Command="{Binding ReturnDoctor}"/>
                     <MenuItem Header="_Change">
-                        <MenuItem Header="_Password"/>
+                        <MenuItem Header="_Password" Command="{Binding ChangePassword}"/>
                     </MenuItem>
-                    <MenuItem Header="_LogOut"/>
+                    <MenuItem Header="_LogOut" Command="{Binding CloseCommand}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -37,22 +37,26 @@
                    Style="{StaticResource BorderStyle}"
                     >
                 <StackPanel Margin="5,10">
-                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}" Command="{Binding ReturnAllPatients}">
                         <TextBlock>List of<LineBreak/>patients</TextBlock>
                     </Button>
-                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}" Command="{Binding AddNewPatient}">
                         <TextBlock>Add new<LineBreak/>patient</TextBlock>
                     </Button>
-                    <Button Width="120"  Style="{StaticResource ButtonStyle}">
+                    <Button Width="120"  Style="{StaticResource ButtonStyle}" Command="{Binding ReturnAllAppointments}">
                         <TextBlock>List of all<LineBreak/>appointments</TextBlock>
                     </Button>
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="2" Width="Auto" Style="{StaticResource BorderStyle}">
-                <ContentControl>
-                    
-                </ContentControl>
+                <HeaderedContentControl
+                    Content="{Binding Path=ContentTab}"
+                    ContentTemplate="{StaticResource TabTemplate}"
+                    Header="Doctors office"
+                    Style="{StaticResource HeaderStyle}"
+                    Margin="2"
+                    />
             </Border>
         </Grid>
     </DockPanel>

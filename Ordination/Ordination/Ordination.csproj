@@ -56,6 +56,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ViewModel\TabViewModel.cs" />
+    <Compile Include="ViewModel\User\AddPatientViewModel.cs" />
+    <Compile Include="ViewModel\User\AllAppointmentsViewModel.cs" />
+    <Compile Include="ViewModel\User\AllPatientsViewModel.cs" />
+    <Compile Include="ViewModel\User\DoctorViewModel.cs" />
+    <Compile Include="ViewModel\User\UserChangePaswordViewModel.cs" />
+    <Compile Include="ViewModel\User\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Admin\AddDoctorView.xaml.cs">
       <DependentUpon>AddDoctorView.xaml</DependentUpon>
@@ -194,12 +201,13 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\Admin\" />
-    <Folder Include="ViewModel\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

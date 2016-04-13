@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ordination.View.User;
+using Ordination.ViewModel.User;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,27 @@ namespace Ordination
     /// </summary>
     public partial class App : Application
     {
+       protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            UserView window = new UserView();
+
+            var viewModel = new UserViewModel();
+
+            EventHandler handler = null;
+            handler = delegate
+            {
+                viewModel.RequestClose -= handler;
+                window.Close();
+            };
+
+            viewModel.RequestClose += handler;
+
+            window.DataContext = viewModel;
+            window.Show();
+            
+        }
+
     }
 }
