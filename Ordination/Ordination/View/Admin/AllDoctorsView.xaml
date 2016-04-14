@@ -4,22 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              >
     <UserControl.Resources>
-        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
-
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
-            <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
-                        <Condition Property="IsSelected" Value="False" />
-                        <Condition Property="IsMouseOver" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#EEEEEEEE" />
-                </MultiTrigger>
-            </Style.Triggers> -->
-        </Style>
+        <ResourceDictionary Source="AdminViewResources.xaml"/>
     </UserControl.Resources>
     <DockPanel>
         <ListView DockPanel.Dock="Top"
@@ -41,6 +26,9 @@
                 
             </ListView.View>
         </ListView>
+        <StackPanel HorizontalAlignment="Left">
+            <Button Content="Delete" Width="100" Style="{StaticResource ButtonStyle}"/>
+        </StackPanel>
     </DockPanel>
     
     

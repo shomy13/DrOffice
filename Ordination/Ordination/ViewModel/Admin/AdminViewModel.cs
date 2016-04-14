@@ -10,21 +10,19 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Ordination.ViewModel.User
+namespace Ordination.ViewModel.Admin
 {
-    class UserViewModel : TabViewModel
+    class AdminViewModel : TabViewModel
     {
         ObservableCollection<TabViewModel> _tabTemplate;
 
-        RelayCommand _addNewPatient;
-        RelayCommand _returnAllPatients;
-        RelayCommand _returnAllAppointments;
-        RelayCommand _returnDoctor;
+        RelayCommand _addNewDoctor;
+        RelayCommand _returnAllDoctors;
         RelayCommand _changePassword;
 
         #region Constructor
-        public UserViewModel()
-        {          
+        public AdminViewModel()
+        {
         }
         #endregion
 
@@ -41,7 +39,7 @@ namespace Ordination.ViewModel.User
                 return _tabTemplate;
             }
         }
-        
+
         void OnTabChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
@@ -70,90 +68,42 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
-        #region Command AddNewPatient
-        public ICommand AddNewPatient
+        #region Command AddNewDoctor
+        public ICommand AddNewDoctor
         {
             get
             {
-                _addNewPatient = new RelayCommand(param => this.NewPatientAdd());
-                return _addNewPatient;
+                _addNewDoctor = new RelayCommand(param => this.NewDoctorAdd());
+                return _addNewDoctor;
             }
         }
 
-        void NewPatientAdd()
+        void NewDoctorAdd()
         {
-            AddPatientViewModel tab = new AddPatientViewModel();
+            AddDoctorViewModel tab = new AddDoctorViewModel();
             this.ContentTab.Add(tab);
             this.SetActiveTab(tab);
         }
         #endregion
 
-        #region Command ReturnAllPatients
-        public ICommand ReturnAllPatients
+        #region Command ReturnAllDoctors
+        public ICommand ReturnAllDoctors
         {
             get
             {
-                _returnAllPatients = new RelayCommand(param => this.AllPatientsReturn());
-                return _returnAllPatients;
+                _returnAllDoctors = new RelayCommand(param => this.AllPatientsReturn());
+                return _returnAllDoctors;
             }
         }
 
         void AllPatientsReturn()
         {
-            AllPatientsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllPatientsViewModel)
-                as AllPatientsViewModel;
-
-            if(tab == null)
-            {
-                tab = new AllPatientsViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
-            }
-        }
-        #endregion
-
-        #region Command ReturnAllAppointments
-        public ICommand ReturnAllAppointments
-        {
-            get
-            {
-                _returnAllAppointments = new RelayCommand(param => this.AllAppointmentsReturn());
-                return _returnAllAppointments;
-            }
-        }
-
-        void AllAppointmentsReturn()
-        {
-            AllAppointmentsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllAppointmentsViewModel)
-                as AllAppointmentsViewModel;
-
-            if(tab == null)
-            {
-                tab = new AllAppointmentsViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
-            }
-        }
-        #endregion
-
-        #region Command ReturnDoctor
-        public ICommand ReturnDoctor
-        {
-            get
-            {
-                _returnDoctor = new RelayCommand(param => this.DoctorReturn());
-                return _returnDoctor;
-            }
-        }
-
-        void DoctorReturn()
-        {
-            DoctorViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is DoctorViewModel)
-                as DoctorViewModel;
+            AllDoctorsVewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllDoctorsVewModel)
+                as AllDoctorsVewModel;
 
             if (tab == null)
             {
-                tab = new DoctorViewModel();
+                tab = new AllDoctorsVewModel();
                 this.ContentTab.Add(tab);
                 this.SetActiveTab(tab);
             }
@@ -172,12 +122,12 @@ namespace Ordination.ViewModel.User
 
         void PasswordChange()
         {
-         UserChangePasswordViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is UserChangePasswordViewModel)
-                as UserChangePasswordViewModel;
+            ChangePasswordViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is ChangePasswordViewModel)
+                   as ChangePasswordViewModel;
 
             if (tab == null)
             {
-                tab = new UserChangePasswordViewModel();
+                tab = new ChangePasswordViewModel();
                 this.ContentTab.Add(tab);
                 this.SetActiveTab(tab);
             }

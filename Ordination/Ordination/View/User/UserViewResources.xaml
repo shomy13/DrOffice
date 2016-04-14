@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:vm ="clr-namespace:Ordination.ViewModel.User"
+                    xmlns:vm ="clr-namespace:Ordination.ViewModel.User"
                     xmlns:vW ="clr-namespace:Ordination.View.User"
                     >
     <DataTemplate DataType="{x:Type vm:AddPatientViewModel}">
@@ -19,7 +19,7 @@
         <vW:DoctorView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:UserChangePaswordViewModel}">
+    <DataTemplate DataType="{x:Type vm:UserChangePasswordViewModel}">
         <vW:UserChangePassword/>
     </DataTemplate>
     <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
@@ -94,11 +94,11 @@
                 Focusable="False"
                 FontSize="12"
                 FontWeight="Bold"
-                Foreground="Blue"
                 Margin="0,1,0,0"
                 Padding="0"
                 VerticalAlignment="Bottom"
                 Width="20" Height="20"
+                Style="{StaticResource ButtonStyle}"
                 />
             <ContentPresenter
                 Content="Tab"

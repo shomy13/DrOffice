@@ -1,4 +1,6 @@
-﻿using Ordination.View.User;
+﻿using Ordination.View;
+using Ordination.View.User;
+using Ordination.ViewModel.Admin;
 using Ordination.ViewModel.User;
 using System;
 using System.Collections.Generic;
@@ -15,27 +17,37 @@ namespace Ordination
     /// </summary>
     public partial class App : Application
     {
-       protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
+        /* protected override void OnStartup(StartupEventArgs e)
+         {
+              base.OnStartup(e);
 
-            UserView window = new UserView();
+              UserView userWindow = new UserView();
+              AdminView adminWindow = new AdminView();
+              var userViewModel = new UserViewModel();
+              var adminViewModel = new AdminViewModel();
 
-            var viewModel = new UserViewModel();
+              EventHandler userHandler = null;
+              EventHandler adminHandler = null;
+              userHandler = delegate
+              {
+                  userViewModel.RequestClose -= userHandler;
+                  userWindow.Close();
+              };
+              adminHandler = delegate
+              {
+                  adminViewModel.RequestClose -= adminHandler;
+                  adminWindow.Close();
+              };
 
-            EventHandler handler = null;
-            handler = delegate
-            {
-                viewModel.RequestClose -= handler;
-                window.Close();
-            };
+              userViewModel.RequestClose += userHandler;
+              adminViewModel.RequestClose += adminHandler;
 
-            viewModel.RequestClose += handler;
+              userWindow.DataContext = userViewModel;
+              adminWindow.DataContext = adminViewModel;
+             // userWindow.Show();
+              //adminWindow.Show();
 
-            window.DataContext = viewModel;
-            window.Show();
-            
-        }
+          }*/
 
     }
 }

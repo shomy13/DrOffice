@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordination.ViewModel.User
+namespace Ordination.ViewModel.Admin
 {
-    class UserChangePaswordViewModel : TabViewModel
+    class AddDoctorViewModel : TabViewModel
     {
-        public UserChangePaswordViewModel()
+        public AddDoctorViewModel()
         {
         }
     }

@@ -23,23 +23,27 @@
             <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
                 <Menu KeyboardNavigation.TabNavigation="Cycle" FontSize="14" Background="AliceBlue" Foreground="Blue">
                     <MenuItem Header="_Add">
-                        <MenuItem Header="_Doctor"/>
+                        <MenuItem Header="_Doctor" Command="{Binding AddNewDoctor}"/>
                     </MenuItem>
                     <MenuItem Header="_View">
-                        <MenuItem Header="_All doctors"/>
+                        <MenuItem Header="_All doctors" Command="{Binding ReturnAllDoctors}"/>
                     </MenuItem>
                     <MenuItem Header="Change">
-                        <MenuItem Header="Password"/>
+                        <MenuItem Header="Password" Command="{Binding ChangePassword}"/>
                     </MenuItem>
-                    <MenuItem Header="LogOut"/>
+                    <MenuItem Header="LogOut" Command="{Binding CloseCommand}"/>
                 </Menu>
             </DockPanel>
            
         </DockPanel>
         <Border Margin="5" Width="Auto" Grid.Row="2"  Style="{StaticResource BorderStyle}">
-            <ContentControl>
-
-            </ContentControl>
+            <HeaderedContentControl
+                 Content="{Binding Path=ContentTab}"
+                    ContentTemplate="{StaticResource TabTemplate}"
+                    Header="Admin main page"
+                    Style="{StaticResource HeaderStyle}"
+                    Margin="2"
+                />
         </Border>
     </Grid>
 </Window>
