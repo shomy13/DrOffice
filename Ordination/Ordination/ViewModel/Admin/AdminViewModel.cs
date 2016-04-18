@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ordination.Model.DAO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -16,9 +17,12 @@ namespace Ordination.ViewModel.Admin
     {
         ObservableCollection<TabViewModel> _tabTemplate;
 
+        AdminDAO adminDao = new AdminDAO();
+
         RelayCommand _addNewDoctor;
         RelayCommand _returnAllDoctors;
         RelayCommand _changePassword;
+        
 
         #region Constructor
         public AdminViewModel()
@@ -98,6 +102,8 @@ namespace Ordination.ViewModel.Admin
 
         void AllPatientsReturn()
         {
+            adminDao.ReturnAllDoctorsDAO();
+
             AllDoctorsVewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllDoctorsVewModel)
                 as AllDoctorsVewModel;
 

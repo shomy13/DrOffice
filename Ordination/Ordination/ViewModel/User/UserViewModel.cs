@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ordination.Model.DAO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -14,6 +15,8 @@ namespace Ordination.ViewModel.User
 {
     class UserViewModel : TabViewModel
     {
+        UserDAO userDao = new UserDAO();
+
         ObservableCollection<TabViewModel> _tabTemplate;
 
         RelayCommand _addNewPatient;
@@ -100,6 +103,8 @@ namespace Ordination.ViewModel.User
 
         void AllPatientsReturn()
         {
+            userDao.ReturnAllPatientsDAO();
+
             AllPatientsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllPatientsViewModel)
                 as AllPatientsViewModel;
 
@@ -124,6 +129,8 @@ namespace Ordination.ViewModel.User
 
         void AllAppointmentsReturn()
         {
+            userDao.ReturnAllAppointmentsDAO();
+
             AllAppointmentsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllAppointmentsViewModel)
                 as AllAppointmentsViewModel;
 
@@ -148,6 +155,8 @@ namespace Ordination.ViewModel.User
 
         void DoctorReturn()
         {
+            userDao.ReturnDoctorDAO();
+
             DoctorViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is DoctorViewModel)
                 as DoctorViewModel;
 

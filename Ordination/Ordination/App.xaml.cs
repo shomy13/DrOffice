@@ -17,7 +17,7 @@ namespace Ordination
     /// </summary>
     public partial class App : Application
     {
-        /* protected override void OnStartup(StartupEventArgs e)
+         protected override void OnStartup(StartupEventArgs e)
          {
               base.OnStartup(e);
 
@@ -44,10 +44,10 @@ namespace Ordination
 
               userWindow.DataContext = userViewModel;
               adminWindow.DataContext = adminViewModel;
-             // userWindow.Show();
-              //adminWindow.Show();
+              userWindow.Show();
+             // adminWindow.Show();
 
-          }*/
+          }
 
     }
 }

@@ -27,7 +27,7 @@
             </ListView.View>
         </ListView>
         <StackPanel HorizontalAlignment="Left">
-            <Button Content="Delete" Width="100" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Delete" Width="100" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteDoctorUC}"/>
         </StackPanel>
     </DockPanel>
     
