@@ -44,7 +44,7 @@ namespace Ordination
 
               userWindow.DataContext = userViewModel;
               adminWindow.DataContext = adminViewModel;
-              userWindow.Show();
+            userWindow.Show();
              // adminWindow.Show();
 
           }

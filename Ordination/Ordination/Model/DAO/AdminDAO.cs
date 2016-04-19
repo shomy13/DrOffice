@@ -19,7 +19,7 @@ namespace Ordination.Model.DAO
         string ConnectionString = @" Data source = C:\Users\dev2\Documents\Shomy\DrOffice\DrOffice.db";
 
         #region AddDoctor
-        public void AddDoctorDAO()
+        public void AddDoctorDAO( Doctor d)
         {
             using(SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -29,10 +29,8 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"INSERT INTO doctor 
-                        (first_name, last_name, address, email, phone_number, birth_date, user_name, password)
-                        VALUES
-                        ('Nikola', 'Ninkovic', 'Rajiceva 18 Cacak', 'dzigi@gmail.com', '0654565878', '1988-05-25', 'dzigi', 'dzigi')";
+                        cmd.CommandText = String.Format(" INSERT INTO doctor (first_name, last_name, address, email, phone_number, birth_date, user_name, password) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', 'aaa')",
+                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Doctor successfully added!");
                         con.Close();

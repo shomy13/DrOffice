@@ -123,4 +123,14 @@
             />
     </DataTemplate>
 
+
+    <DataTemplate DataType="{x:Type ValidationError}">
+        <TextBlock
+                              FontStyle="Italic"
+                              Foreground="Red"
+                              HorizontalAlignment="Right"
+                              Margin="0,1"
+                              Text="{Binding Path=ErrorContent}"/>
+    </DataTemplate>
+
 </ResourceDictionary>

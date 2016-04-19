@@ -64,6 +64,53 @@ namespace Ordination.Model.DAO
         }
         #endregion
 
+        #region ReturnLastPatientID
+
+        public int ReturnLastPatientDAO()
+        {
+            int id = 0;
+            
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = @"SELECT * FROM patient ORDER BY rowid DESC LIMIT 1";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            
+                            if (reader.Read())
+                            {
+                                id = reader.GetInt32(0);
+                            }
+                        }
+
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+            return id;
+        }
+        #endregion
+
         #region ReturnAllPatients
 
         public void ReturnAllPatientsDAO()
@@ -159,7 +206,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region AddPatient
-        public void AddPatientDAO()
+        public void AddPatientDAO( Patient p)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -169,10 +216,8 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"INSERT INTO patient 
-                        (first_name, last_name, address, email, phone_number, birth_date)
-                        VALUES
-                        ('Sasa', 'Ilic', 'Rajiceva 18 Cacak', 'ilickapiten@gmail.com', '0654565878', '1988-05-25')";
+                        cmd.CommandText = String.Format(" INSERT INTO patient (first_name, last_name, address, email, phone_number, birth_date) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}')",
+                            p.First_name, p.Last_name, p.Address, p.Email, p.Phone_number, p.Birth_date);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Patient successfully added!");
                         con.Close();
@@ -319,7 +364,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region AddChart
-        public void AddChartDAO()
+        public void AddChartDAO( int id)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -332,7 +377,7 @@ namespace Ordination.Model.DAO
                         cmd.CommandText = @"INSERT INTO chart
                                           (fk_id_doctor, fk_id_patient)
                                           VALUES
-                                          (1, 5)";
+                                          (1, "+id+")";
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Chart successfully added!");
                         con.Close();

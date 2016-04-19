@@ -1,6 +1,8 @@
-﻿using Ordination.Model.DAO;
+﻿using Ordination.Model;
+using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,26 +10,132 @@ using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
 {
-    class AddPatientViewModel : TabViewModel
+    class AddPatientViewModel : TabViewModel, IDataErrorInfo
     {
         UserDAO userDao = new UserDAO();
 
+        Patient _patient = new Patient();
+
         RelayCommand _addNewPatientUC;
+
+        #region getset
+        public string First_name
+        {
+            get { return _patient.First_name; }
+            set
+            {
+                if (value == _patient.First_name)
+                    return;
+
+                _patient.First_name = value;
+            }
+        }
+
+        public string Last_name
+        {
+            get { return _patient.Last_name; }
+            set
+            {
+                if (value == _patient.Last_name)
+                    return;
+
+                _patient.Last_name = value;
+            }
+        }
+
+        public string Address
+        {
+            get { return _patient.Address; }
+            set
+            {
+                if (value == _patient.Address)
+                    return;
+
+                _patient.Address = value;
+            }
+        }
+        public string Email
+        {
+            get { return _patient.Email; }
+            set
+            {
+                if (value == _patient.Email)
+                    return;
+
+                _patient.Email = value;
+            }
+        }
+
+        public string Phone_number
+        {
+            get { return _patient.Phone_number; }
+            set
+            {
+                if (value == _patient.Phone_number)
+                    return;
+
+                _patient.Phone_number = value;
+            }
+        }
+
+        public string Birth_date
+        {
+            get { return _patient.Birth_date; }
+            set
+            {
+                if (value == _patient.Birth_date)
+                    return;
+
+                _patient.Birth_date = value;
+            }
+        }
+
+        
+        #endregion
 
         #region AddNewPatient
         public ICommand AddNewPatientUC
         {
             get
             {
-                _addNewPatientUC = new RelayCommand(param => this.NewPatientAdd());
+                _addNewPatientUC = new RelayCommand(
+                    param => this.NewPatientAdd(),
+                    param => this.CanSave);
                 return _addNewPatientUC;
             }
         }
 
         void NewPatientAdd()
         {
-            userDao.AddPatientDAO();
-            userDao.AddChartDAO();
+            userDao.AddPatientDAO(_patient);
+           
+            userDao.AddChartDAO(userDao.ReturnLastPatientDAO());
+        }
+
+        bool CanSave
+        {
+            get {return _patient.IsValid; }
+        }
+        #endregion
+
+        #region IDataErrorInfo
+        string IDataErrorInfo.Error
+        {
+            get { return (_patient as IDataErrorInfo).Error; }
+        }
+
+        string IDataErrorInfo.this[string propertyName]
+        {
+            get
+            {
+                string error = null;
+
+                error = (_patient as IDataErrorInfo)[propertyName];
+
+                CommandManager.InvalidateRequerySuggested();
+
+                return error;
+            }
         }
         #endregion
     }
