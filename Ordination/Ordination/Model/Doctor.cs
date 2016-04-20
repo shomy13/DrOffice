@@ -92,7 +92,8 @@ namespace Ordination.Model
             "Address",
             "Phone_number",
             "Birth_date",
-            "User_name"
+            "User_name",
+            "Password"
         };
 
         public bool IsValid
@@ -136,6 +137,9 @@ namespace Ordination.Model
                     break;
                 case "User_name":
                     error = this.ValidateUser_name();
+                    break;
+                case "Password":
+                    error = this.ValidatePassword();
                     break;
                 default:
                     Debug.Fail("Unexpected property being validated on Customer: " + propertyName);
@@ -192,6 +196,15 @@ namespace Ordination.Model
             if (IsStringMissing(this.User_name))
             {
                 return "User name is missing";
+            }
+            return null;
+        }
+
+        string ValidatePassword()
+        {
+            if (IsStringMissing(this.Password))
+            {
+                return "Password is missing";
             }
             return null;
         }

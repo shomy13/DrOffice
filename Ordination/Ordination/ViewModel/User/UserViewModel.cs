@@ -1,4 +1,5 @@
-﻿using Ordination.Model.DAO;
+﻿using Ordination.Model;
+using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +17,7 @@ namespace Ordination.ViewModel.User
     class UserViewModel : TabViewModel
     {
         UserDAO userDao = new UserDAO();
-
+        
         ObservableCollection<TabViewModel> _tabTemplate;
 
         RelayCommand _addNewPatient;
@@ -31,6 +32,7 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
+       
         #region TabView    
         public ObservableCollection<TabViewModel> ContentTab
         {
@@ -155,7 +157,7 @@ namespace Ordination.ViewModel.User
 
         void DoctorReturn()
         {
-            userDao.ReturnDoctorDAO();
+            
 
             DoctorViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is DoctorViewModel)
                 as DoctorViewModel;

@@ -89,6 +89,7 @@
     <Compile Include="ViewModel\Admin\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="ViewModel\TabViewModel.cs" />
+    <Compile Include="ViewModel\UI\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModel\User\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\User\AllAppointmentsViewModel.cs" />
     <Compile Include="ViewModel\User\AllPatientsViewModel.cs" />
@@ -230,7 +231,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

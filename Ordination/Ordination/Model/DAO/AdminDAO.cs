@@ -11,10 +11,12 @@ namespace Ordination.Model.DAO
 {
     public class AdminDAO
     {
+        #region Constructor
         public AdminDAO()
         {
 
         }
+        #endregion
 
         string ConnectionString = @" Data source = C:\Users\dev2\Documents\Shomy\DrOffice\DrOffice.db";
 
@@ -29,8 +31,8 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = String.Format(" INSERT INTO doctor (first_name, last_name, address, email, phone_number, birth_date, user_name, password) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', 'aaa')",
-                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name);
+                        cmd.CommandText = String.Format(" INSERT INTO doctor (first_name, last_name, address, email, phone_number, birth_date, user_name, password) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', '{7}')",
+                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name, d.Password);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Doctor successfully added!");
                         con.Close();
@@ -72,7 +74,7 @@ namespace Ordination.Model.DAO
                             while (reader.Read())
                             {
                                 Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + reader["birth_date"]
+                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy")
                                     + " " + reader["user_name"] + " " + reader["password"]);
                             }
                         }
@@ -134,9 +136,11 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region AdminExists
-        public string AdminExistsDAO()
+        public int AdminExistsDAO(string user_name, string password)
         {
-            string returnString = "";
+            
+            
+            int id = -1;
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -145,15 +149,20 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT * FROM admin WHERE user_name='admin' and password='123456'";
+                        cmd.CommandText = @"SELECT * FROM admin WHERE user_name='"+user_name+"' and password='"+password+"'";
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-                                Console.WriteLine(reader["id_admin"] + " " + reader["user_name"] + " " + reader["password"]);
 
-                                returnString = reader["id_admin"].ToString();
+
+                                if (reader == null)
+                                    id = -1;
+                                else
+                                  id = reader.GetInt32(0);
+
+                                Console.WriteLine(id);
                             }
                             
                         }
@@ -177,12 +186,12 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
-            return returnString;
+            return id;
         }
         #endregion
 
         #region UpdatePassword
-        public void UpdatePassworDAO()
+        public void UpdatePassworDAO(string newPassword, int id)
         {
             
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
@@ -194,8 +203,7 @@ namespace Ordination.Model.DAO
                         con.Open();
 
                         cmd.CommandText = @"UPDATE admin
-                                            SET password = 'admin'
-                                            WHERE id_admin = 1";
+                                            SET password = '"+newPassword+"'WHERE id_admin = "+id+"";
                         cmd.ExecuteNonQuery();
 
                         MessageBox.Show("Password updated!");

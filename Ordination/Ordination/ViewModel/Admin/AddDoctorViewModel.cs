@@ -106,6 +106,18 @@ namespace Ordination.ViewModel.Admin
                 _doctor.User_name = value;
             }
         }
+
+        public string Password
+        {
+            get { return _doctor.Password; }
+            set
+            {
+                if (value == _doctor.Password)
+                    return;
+
+                _doctor.Password = value;
+            }
+        }
         #endregion
 
         #region AddNewDoctor

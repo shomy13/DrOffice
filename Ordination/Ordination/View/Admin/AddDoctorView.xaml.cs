@@ -23,6 +23,9 @@ namespace Ordination.View.Admin
         public AddDoctorView()
         {
             InitializeComponent();
+            
         }
+         
+        
     }
 }

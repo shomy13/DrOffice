@@ -39,7 +39,7 @@ namespace Ordination.Model.DAO
                             if (reader.Read())
                             {
                                 Console.WriteLine(reader["id_patient"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + reader["birth_date"]);
+                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("dd/MM/yyyy"));
                             }
                         }
 
@@ -130,7 +130,7 @@ namespace Ordination.Model.DAO
                             while (reader.Read())
                             {
                                 Console.WriteLine(reader["id_patient"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + reader["birth_date"]); 
+                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy")); 
                             }
                         }
 
@@ -179,7 +179,7 @@ namespace Ordination.Model.DAO
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine(reader["id_appointment"] + " " + reader["date"] + " " + reader["last_name"]
+                                Console.WriteLine(reader["id_appointment"] + " " + Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy") + " " + reader["last_name"]
                                     + " " + reader["first_name"]);
                             }
                         }
@@ -242,8 +242,10 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region ReturnDoctor
-        public void ReturnDoctorDAO()
+        public Doctor ReturnDoctorDAO()
         {
+            Doctor d = new Doctor();
+
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -258,9 +260,16 @@ namespace Ordination.Model.DAO
                         {
                             if (reader.Read())
                             {
-                                Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + reader["birth_date"]
-                                    + " " + reader["user_name"] + " " + reader["password"]);
+                                d.First_name = reader["first_name"].ToString();
+                                d.Last_name = reader["last_name"].ToString();
+                                d.Address = reader["address"].ToString();
+                                d.Email = reader["email"].ToString();
+                                d.Phone_number = reader["phone_number"].ToString();
+                                d.Birth_date = Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd");
+
+                               /* Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
+                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd")
+                                    + " " + reader["user_name"] + " " + reader["password"]);*/
                             }
                         }
 
@@ -282,11 +291,12 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
+            return d;
         }
         #endregion
 
         #region UpdateDoctor
-        public void UpdateDoctorDAO()
+        public void UpdateDoctorDAO( Doctor d)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -296,10 +306,9 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"UPDATE doctor
-                        SET first_name = 'Uros', last_name = 'Petrovic', address = 'Kuzeljeva 13 Cacak',
-                        email = 'pera@gmail.com', phone_number = '0656516469',birth_date = '1977-03-23'
-                        WHERE id_doctor = 1 ";
+                        cmd.CommandText = String.Format(
+                            "UPDATE doctor SET first_name = '{0}', last_name = '{1}', address = '{2}', email = '{3}', phone_number = '{4}',birth_date = '{5}' WHERE id_doctor = 1 ",
+                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Doctor successfully updated!");
                         con.Close();
@@ -324,7 +333,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region UpdatePassword
-        public void UserChangePasswordDAO()
+        public void UserChangePasswordDAO(string newPassword, int id)
         {
 
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
@@ -336,8 +345,7 @@ namespace Ordination.Model.DAO
                         con.Open();
 
                         cmd.CommandText = @"UPDATE doctor
-                                            SET password = 'doctor'
-                                            WHERE id_doctor = 5";
+                                            SET password = '"+newPassword+"'WHERE id_doctor = "+id+"";
                         cmd.ExecuteNonQuery();
 
                         MessageBox.Show("Password updated!");
@@ -440,9 +448,9 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region UserExists
-        public string UserExistsDAO()
+        public int UserExistsDAO(string user_name, string password)
         {
-            string returnString = "";
+            int id = -1;
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -451,20 +459,21 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT * FROM doctor WHERE user_name='dzigi' and password='dzigi'";
+                        cmd.CommandText = @"SELECT * FROM doctor WHERE user_name='"+user_name+"' and password='"+password+"'";
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-                                Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                     + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + reader["birth_date"]);
+                                if (reader == null)
+                                    id = -1;
+                                else
+                                    id = reader.GetInt32(0);
 
-                                returnString = reader["id_doctor"].ToString();
+                                Console.WriteLine(id);
                             }
 
                         }
-
 
                         con.Close();
                     }
@@ -484,7 +493,7 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
-            return returnString;
+            return id;
         }
         #endregion
     }

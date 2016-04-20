@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:vm="clr-namespace:Ordination.View"
+             xmlns:pa ="clr-namespace:Ordination.ViewModel.UI"
              Height="410" Width="330">
     <UserControl.Resources>
         <ResourceDictionary Source="AdminViewResources.xaml"/>
@@ -47,6 +48,7 @@
         <ContentPresenter Grid.Row="9" Grid.Column="1" Content="{Binding ElementName=Phone_number_txt, Path=(Validation.Errors).CurrentItem}"/>
         <ContentPresenter Grid.Row="11" Grid.Column="1" Content="{Binding ElementName=Birth_date_txt, Path=(Validation.Errors).CurrentItem}"/>
         <ContentPresenter Grid.Row="13" Grid.Column="1" Content="{Binding ElementName=User_name_txt, Path=(Validation.Errors).CurrentItem}"/>
+        <ContentPresenter Grid.Row="15" Grid.Column="1" Content="{Binding ElementName=PasswordBox, Path=(Validation.Errors).CurrentItem}"/>
 
         <TextBox x:Name="First_name_txt" Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding First_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="Last_name_txt" Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding Last_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
@@ -55,7 +57,8 @@
         <TextBox x:Name="Phone_number_txt" Grid.Column="1" Grid.Row="8" Margin="2" Text="{Binding Phone_number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="Birth_date_txt" Grid.Column="1" Grid.Row="10" Margin="2" Text="{Binding Birth_date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="User_name_txt" Grid.Column="1" Grid.Row="12" Margin="2" Text="{Binding User_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-        <PasswordBox Grid.Column="1" Grid.Row="14" Margin="2" PasswordChar="*" FontWeight="ExtraBold" Name="txtPassword"/>
+        <PasswordBox Grid.Column="1" Grid.Row="14" Margin="2" PasswordChar="*" FontWeight="ExtraBold" Name="PasswordBox"
+                     pa:PasswordBoxAssistant.BindPassword="True" pa:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="16" HorizontalAlignment="Right">
             <Button Width="100" Content="Add" Style="{StaticResource ButtonStyle}" Command="{Binding AddNewDoctorUC}"/>
         </StackPanel>
