@@ -113,8 +113,11 @@ namespace Ordination.Model.DAO
 
         #region ReturnAllPatients
 
-        public void ReturnAllPatientsDAO()
+        public List<Patient> ReturnAllPatientsDAO()
         {
+            List<Patient> list = new List<Patient>();
+            
+
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -123,17 +126,28 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT * FROM patient";
+                        cmd.CommandText = @"SELECT * FROM patient
+                        ORDER BY first_name, last_name, birth_date";
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine(reader["id_patient"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy")); 
+                                Patient p = new Patient();
+                                p.Id_patient = reader.GetInt32(0);
+                                p.First_name = reader["first_name"].ToString();
+                                p.Last_name = reader["last_name"].ToString();
+                                p.Address = reader["address"].ToString();
+                                p.Email = reader["email"].ToString();
+                                p.Phone_number = reader["phone_number"].ToString();
+                                p.Birth_date = Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy");
+
+                                list.Add(p);
+                            
+                                 
                             }
                         }
-
+                       
                         con.Close();
                     }
                     catch (Exception ex)
@@ -152,6 +166,7 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
+            return list;
         }
         #endregion
 

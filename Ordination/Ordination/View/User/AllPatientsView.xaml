@@ -2,40 +2,32 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:sb="clr-namespace:Ordination.ViewModel.UI"
            >
     <UserControl.Resources>
-        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
-
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
-            <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
-                        <Condition Property="IsSelected" Value="False" />
-                        <Condition Property="IsMouseOver" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#EEEEEEEE" />
-                </MultiTrigger>
-            </Style.Triggers> -->
-        </Style>
+        <ResourceDictionary Source="UserViewResources.xaml"/>
     </UserControl.Resources>
+    
     <DockPanel>
         <ListView DockPanel.Dock="Top"
                   AlternationCount="2"
+                  SelectionMode="Single"
                   ItemContainerStyle="{StaticResource ItemStyle}"
-                  ItemsSource="{Binding}"
+                  ItemsSource="{Binding AllPatientList}"
+                  SelectedItem="{Binding SelectedItem}"
+                  sb:SelectionBehavior.SelectionChanged="{Binding SelectedCommand}"
+                  
                   >
 
             <ListView.View>
                 <GridView >
-                    <GridViewColumn Header="First Name" />
-                    <GridViewColumn Header="Last Name" />
-                    <GridViewColumn Header="Address" />
-                    <GridViewColumn Header="Email" />
-                    <GridViewColumn Header="Phone Number" />
-                    <GridViewColumn Header="Birth date" />
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id_patient}"/>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding First_name}"/>
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Last_name}"/>
+                    <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding Phone_number}"/>
+                    <GridViewColumn Header="Birth date" DisplayMemberBinding="{Binding Birth_date}"/>
                 </GridView>
 
             </ListView.View>

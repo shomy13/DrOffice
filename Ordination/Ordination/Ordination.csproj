@@ -90,10 +90,12 @@
     <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="ViewModel\TabViewModel.cs" />
     <Compile Include="ViewModel\UI\PasswordBoxAssistant.cs" />
+    <Compile Include="ViewModel\UI\SelectionBehavior.cs" />
     <Compile Include="ViewModel\User\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\User\AllAppointmentsViewModel.cs" />
     <Compile Include="ViewModel\User\AllPatientsViewModel.cs" />
     <Compile Include="ViewModel\User\DoctorViewModel.cs" />
+    <Compile Include="ViewModel\User\PatientViewModel.cs" />
     <Compile Include="ViewModel\User\UserChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\User\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

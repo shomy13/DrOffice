@@ -65,7 +65,7 @@ namespace Ordination.ViewModel.User
             this.ContentTab.Remove(tab);
         }
 
-        void SetActiveTab(TabViewModel tab)
+       public void SetActiveTab(TabViewModel tab)
         {
             Debug.Assert(this.ContentTab.Contains(tab));
 
@@ -87,9 +87,11 @@ namespace Ordination.ViewModel.User
 
         void NewPatientAdd()
         {
-            AddPatientViewModel tab = new AddPatientViewModel();
-            this.ContentTab.Add(tab);
-            this.SetActiveTab(tab);
+             AddPatientViewModel tab = new AddPatientViewModel();
+           // PatientViewModel tab = new PatientViewModel();
+             this.ContentTab.Add(tab);
+             this.SetActiveTab(tab);
+            
         }
         #endregion
 

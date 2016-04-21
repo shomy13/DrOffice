@@ -22,6 +22,29 @@
     <DataTemplate DataType="{x:Type vm:UserChangePasswordViewModel}">
         <vW:UserChangePassword/>
     </DataTemplate>
+
+   <DataTemplate DataType="{x:Type vm:PatientViewModel}">
+        <vW:PatientView/>
+    </DataTemplate>
+    
+    <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+
+        <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#EEEEEEEE" />
+                </MultiTrigger>
+            </Style.Triggers> -->
+    </Style>
+
     <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="Margin" Value="5,2"/>

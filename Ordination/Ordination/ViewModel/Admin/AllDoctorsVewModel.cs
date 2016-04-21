@@ -1,6 +1,8 @@
-﻿using Ordination.Model.DAO;
+﻿using Ordination.Model;
+using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,30 @@ namespace Ordination.ViewModel.Admin
 {
     class AllDoctorsVewModel : TabViewModel
     {
-        AdminDAO adminDao = new AdminDAO();
+        static AdminDAO adminDao = new AdminDAO();
+
+        private ObservableCollection<Doctor> _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+        private Doctor _selectedDoctor = new Doctor();
+
+        
+
+        public ObservableCollection<Doctor> AllDoctorsList
+        {
+            get { return _allDoctorsList; }
+        }
+
+        public Doctor DoctorSelected
+        {
+            get { return _selectedDoctor; }
+            set { _selectedDoctor = value;
+                OnPropertyChanged("SelectedDoctor");
+            }
+        }
+
+        /*public List<Doctor> AllDoctorsList
+        {
+            get { return _allDoctorsList; }
+        }*/
 
         RelayCommand _deleteDoctorUC;
 
@@ -32,7 +57,7 @@ namespace Ordination.ViewModel.Admin
 
         void DoctorDelete()
         {
-            adminDao.DeleteDoctorDAO();
+            adminDao.DeleteDoctorDAO(DoctorSelected.Id_doctor);
         }
         #endregion
     }

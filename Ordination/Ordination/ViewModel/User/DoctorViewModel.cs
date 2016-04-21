@@ -2,6 +2,7 @@
 using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
 {
-    class DoctorViewModel : TabViewModel
+    class DoctorViewModel : TabViewModel, IDataErrorInfo
     {
         
         static UserDAO userDao = new UserDAO();
@@ -125,6 +126,27 @@ namespace Ordination.ViewModel.User
         void DoctorUpdate()
         {
             userDao.UpdateDoctorDAO(_doctor);
+        }
+        #endregion
+
+        #region IDataErrorInfo
+        string IDataErrorInfo.Error
+        {
+            get { return (_doctor as IDataErrorInfo).Error; }
+        }
+
+        string IDataErrorInfo.this[string propertyName]
+        {
+            get
+            {
+                string error = null;
+
+                error = (_doctor as IDataErrorInfo)[propertyName];
+
+                CommandManager.InvalidateRequerySuggested();
+
+                return error;
+            }
         }
         #endregion
     }

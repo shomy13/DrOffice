@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
@@ -57,8 +58,9 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region ReturnAllDoctors
-        public void ReturnAllDoctorsDAO()
+        public ObservableCollection<Doctor> ReturnAllDoctorsDAO()
         {
+            ObservableCollection<Doctor> list = new ObservableCollection<Doctor>();
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -67,15 +69,24 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT * FROM doctor";
+                        cmd.CommandText = @"SELECT * FROM doctor 
+                        ORDER BY first_name, last_name, birth_date";
                      
                         using(SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy")
-                                    + " " + reader["user_name"] + " " + reader["password"]);
+                                Doctor d = new Doctor();
+                                d.Id_doctor = reader.GetInt32(0);
+                                d.First_name = reader["first_name"].ToString();
+                                d.Last_name = reader["last_name"].ToString();
+                                d.Address = reader["address"].ToString();
+                                d.Email = reader["email"].ToString();
+                                d.Phone_number = reader["phone_number"].ToString();
+                                d.Birth_date = Convert.ToDateTime(reader["birth_date"]).ToString("dd/MM/yyyy");
+                                d.User_name = reader["user_name"].ToString();
+                                list.Add(d);
+
                             }
                         }
                     
@@ -97,11 +108,12 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
+            return list;
         }
         #endregion
 
         #region DeleteDoctor
-        public void DeleteDoctorDAO()
+        public void DeleteDoctorDAO( int id)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -111,9 +123,9 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"DELETE FROM doctor WHERE id_doctor = 3";
+                        cmd.CommandText = @"DELETE FROM doctor WHERE id_doctor = "+id+"";
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Doctor successfully deleted!");
+                        MessageBox.Show("Doctor with id="+id+" successfully deleted!");
                         con.Close();
                     }
                     catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using Ordination.View;
+using Ordination.View.Admin;
 using Ordination.View.User;
 using Ordination.ViewModel.Admin;
 using Ordination.ViewModel.User;
@@ -23,8 +24,10 @@ namespace Ordination
 
               UserView userWindow = new UserView();
               AdminView adminWindow = new AdminView();
+        
               var userViewModel = new UserViewModel();
               var adminViewModel = new AdminViewModel();
+       
 
               EventHandler userHandler = null;
               EventHandler adminHandler = null;
@@ -44,8 +47,9 @@ namespace Ordination
 
               userWindow.DataContext = userViewModel;
               adminWindow.DataContext = adminViewModel;
+        
             userWindow.Show();
-             // adminWindow.Show();
+            // adminWindow.Show();
 
           }
 
