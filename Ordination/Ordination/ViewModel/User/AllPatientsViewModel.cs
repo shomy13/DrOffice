@@ -13,8 +13,7 @@ namespace Ordination.ViewModel.User
     class AllPatientsViewModel : TabViewModel
     {
         RelayCommand _selectedCommand;
-        UserViewModel uv = new UserViewModel();
-
+        UserViewModel uvm = new UserViewModel();
         Patient _selectedItem = new Patient();
         static UserDAO userDao = new UserDAO();
 
@@ -23,6 +22,8 @@ namespace Ordination.ViewModel.User
         public AllPatientsViewModel()
         {
         }
+
+        #region getset
         public List<Patient> AllPatientList
         {
             get { return _allPatientList; }
@@ -38,26 +39,39 @@ namespace Ordination.ViewModel.User
                // OnPropertyChanged("SelectedItem");
             }
         }
+        #endregion
 
+
+        #region SelectedCommand
         public ICommand SelectedCommand
         {
             get
             {
-                _selectedCommand = new RelayCommand(param => CommandSelected());
+                _selectedCommand = new RelayCommand(param => CommandSelected(param));
                 return _selectedCommand;
 
             }
         }
 
-        public void CommandSelected()
-        {
+        public void CommandSelected(object s)
+        { 
             
-           PatientViewModel tab = new PatientViewModel();
-             uv.ContentTab.Add(tab);
-            uv.SetActiveTab(tab);
-            Console.WriteLine(SelectedItem.Id_patient);
-        }
+            /*PatientViewModel tab = uvm.ContentTab.FirstOrDefault(vm => vm is PatientViewModel)
+                as PatientViewModel;
 
-       
+            if (tab == null)
+            {
+                tab = new PatientViewModel();
+                uvm.ContentTab.Add(tab);
+                uvm.SetActiveTab(tab);
+            }*/
+
+            PatientViewModel tab = new PatientViewModel();
+             uvm.ContentTab.Add(tab);
+           uvm.SetActiveTab(tab);
+           
+        }
+        #endregion
+
     }
 }

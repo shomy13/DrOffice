@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\DAO\AdminDAO.cs" />
     <Compile Include="Model\DAO\UserDAO.cs" />
     <Compile Include="Model\Doctor.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="ViewModel\TabViewModel.cs" />
     <Compile Include="ViewModel\UI\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModel\UI\SelectionBehavior.cs" />
+    <Compile Include="ViewModel\User\AddAppointmentViewModel.cs" />
     <Compile Include="ViewModel\User\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\User\AllAppointmentsViewModel.cs" />
     <Compile Include="ViewModel\User\AllPatientsViewModel.cs" />

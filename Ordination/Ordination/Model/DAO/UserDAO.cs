@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
@@ -22,8 +23,9 @@ namespace Ordination.Model.DAO
 
         #region ReturnOnePatient
 
-        public void ReturnOnePatientDAO()
+        public Patient ReturnOnePatientDAO()
         {
+            Patient p = new Patient();
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(con))
@@ -38,8 +40,15 @@ namespace Ordination.Model.DAO
                         {
                             if (reader.Read())
                             {
-                                Console.WriteLine(reader["id_patient"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("dd/MM/yyyy"));
+                                
+
+                                p.First_name = reader["first_name"].ToString();
+                                p.Last_name = reader["last_name"].ToString();
+                                p.Address = reader["address"].ToString();
+                                p.Email = reader["email"].ToString();
+                                p.Phone_number = reader["phone_number"].ToString();
+                                p.Birth_date = Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd");
+
                             }
                         }
 
@@ -61,6 +70,61 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
+            return p;
+        }
+        #endregion
+
+        #region ReturnOneDoctor
+        public Doctor ReturnDoctorDAO()
+        {
+            Doctor d = new Doctor();
+
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = @"SELECT * FROM doctor WHERE id_doctor=1";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                d.First_name = reader["first_name"].ToString();
+                                d.Last_name = reader["last_name"].ToString();
+                                d.Address = reader["address"].ToString();
+                                d.Email = reader["email"].ToString();
+                                d.Phone_number = reader["phone_number"].ToString();
+                                d.Birth_date = Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd");
+
+                                /* Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
+                                     + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd")
+                                     + " " + reader["user_name"] + " " + reader["password"]);*/
+                            }
+                        }
+
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+            return d;
         }
         #endregion
 
@@ -220,6 +284,118 @@ namespace Ordination.Model.DAO
         }
         #endregion
 
+        #region ReturnAllAppointmentsByIdUser
+
+        public ObservableCollection<Appointment> ReturnAllAppointmentsByUserDAO()
+        {
+            ObservableCollection<Appointment> _list = new ObservableCollection<Appointment>();
+
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = @"SELECT appointment.id_appointment, appointment.date
+                                            FROM appointment
+                                            INNER JOIN chart
+                                            ON appointment.fk_id_chart = chart.id_chart
+                                            INNER JOIN patient
+                                            ON chart.fk_id_patient = patient.id_patient
+                                            WHERE id_patient = 6
+                                            ORDER BY date, last_name";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Appointment _appointment = new Appointment();
+                                
+                                _appointment.Id_appointment = reader.GetInt32(0);
+                                _appointment.Date = Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy");
+
+                                _list.Add(_appointment);
+                                /*Console.WriteLine(reader["id_appointment"] + " " + Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy") + " " + reader["last_name"]
+                                    + " " + reader["first_name"]);*/
+                            }
+                        }
+
+                        for (int i = 0; i < _list.Count(); i++)
+                            Console.WriteLine(_list[i].Date);
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+            return _list;
+        }
+        #endregion
+
+        #region ReturnAppointmentByIdD
+
+        public Appointment ReturnAppointmentByIdDAO()
+        {
+            Appointment _appointment = new Appointment();
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = @"SELECT *
+                                            FROM appointment
+                                            WHERE id_appointment = 1";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                _appointment.Symptoms = reader["symptoms"].ToString();
+                                _appointment.Diagnosis = reader["diagnosis"].ToString();
+                                _appointment.Treatment = reader["treatment"].ToString();
+                                
+                            }
+                        }
+                        Console.WriteLine(_appointment.Symptoms+_appointment.Diagnosis+_appointment.Treatment);
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+            return _appointment;
+        }
+        #endregion
+
         #region AddPatient
         public void AddPatientDAO( Patient p)
         {
@@ -253,60 +429,6 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
-        }
-        #endregion
-
-        #region ReturnDoctor
-        public Doctor ReturnDoctorDAO()
-        {
-            Doctor d = new Doctor();
-
-            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
-            {
-                using (SQLiteCommand cmd = new SQLiteCommand(con))
-                {
-                    try
-                    {
-                        con.Open();
-
-                        cmd.CommandText = @"SELECT * FROM doctor WHERE id_doctor=1";
-
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                d.First_name = reader["first_name"].ToString();
-                                d.Last_name = reader["last_name"].ToString();
-                                d.Address = reader["address"].ToString();
-                                d.Email = reader["email"].ToString();
-                                d.Phone_number = reader["phone_number"].ToString();
-                                d.Birth_date = Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd");
-
-                               /* Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                    + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd")
-                                    + " " + reader["user_name"] + " " + reader["password"]);*/
-                            }
-                        }
-
-                        con.Close();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        MessageBox.Show(ex.Message);
-
-                    }
-                    finally
-                    {
-                        if (con.State == ConnectionState.Open)
-                        {
-                            con.Close();
-                        }
-
-                    }
-                }
-            }
-            return d;
         }
         #endregion
 
@@ -425,7 +547,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region AddAppointment
-        public void AddAppointmentDAO()
+        public void AddAppointmentDAO( Appointment a)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -435,10 +557,8 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"INSERT INTO appointment
-                                          (fk_id_chart, symptoms, diagnosis, treatment)
-                                          VALUES
-                                          (3, 'bol u kolenu', 'upala mekog tkiva', 'hladne obloge')";
+                        cmd.CommandText = String.Format("INSERT INTO appointment (fk_id_chart, symptoms, diagnosis, treatment)VALUES((SELECT chart.id_chart FROM chart INNER JOIN patient ON chart.fk_id_patient = patient.id_patient WHERE id_patient = 6), '{0}', '{1}', '{2}')"
+                            , a.Symptoms, a.Diagnosis, a.Treatment);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Appointment successfully added!");
                         con.Close();

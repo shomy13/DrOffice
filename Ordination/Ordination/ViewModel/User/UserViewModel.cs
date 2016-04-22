@@ -18,8 +18,8 @@ namespace Ordination.ViewModel.User
     {
         UserDAO userDao = new UserDAO();
         
-        ObservableCollection<TabViewModel> _tabTemplate;
-
+        static ObservableCollection<TabViewModel> _tabTemplate;
+        
         RelayCommand _addNewPatient;
         RelayCommand _returnAllPatients;
         RelayCommand _returnAllAppointments;
@@ -45,6 +45,10 @@ namespace Ordination.ViewModel.User
                 }
                 return _tabTemplate;
             }
+          /*  set
+            {
+                _tabTemplate = value;
+            }*/
         }
         
         void OnTabChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -87,11 +91,11 @@ namespace Ordination.ViewModel.User
 
         void NewPatientAdd()
         {
-             AddPatientViewModel tab = new AddPatientViewModel();
-           // PatientViewModel tab = new PatientViewModel();
-             this.ContentTab.Add(tab);
+            AddPatientViewModel tab = new AddPatientViewModel();
+            //PatientViewModel tab = new PatientViewModel();
+            this.ContentTab.Add(tab);
              this.SetActiveTab(tab);
-            
+
         }
         #endregion
 
@@ -144,6 +148,8 @@ namespace Ordination.ViewModel.User
                 this.ContentTab.Add(tab);
                 this.SetActiveTab(tab);
             }
+
+            Console.WriteLine(ContentTab.Count());
         }
         #endregion
 
@@ -196,5 +202,7 @@ namespace Ordination.ViewModel.User
             }
         }
         #endregion
+
+      
     }
 }
