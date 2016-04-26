@@ -137,7 +137,7 @@ namespace Ordination.ViewModel.User
 
         void AllAppointmentsReturn()
         {
-            userDao.ReturnAllAppointmentsDAO();
+            //userDao.ReturnAllAppointmentsDAO();
 
             AllAppointmentsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllAppointmentsViewModel)
                 as AllAppointmentsViewModel;

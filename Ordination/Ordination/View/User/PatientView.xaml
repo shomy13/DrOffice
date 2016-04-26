@@ -34,17 +34,17 @@
 
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="First name:"/>
-        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding First_name}"/>
+        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding First_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Last name:"/>
-        <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Last_name}"/>
+        <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Last_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="Address:"/>
-        <TextBox Grid.Column="0" Grid.Row="5" Text="{Binding Address}"/>
+        <TextBox Grid.Column="0" Grid.Row="5" Text="{Binding Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="6" Content="Email:"/>
-        <TextBox Grid.Column="0" Grid.Row="7" Text="{Binding Email}"/>
+        <TextBox Grid.Column="0" Grid.Row="7" Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="8" Content="Phone number:"/>
-        <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Phone_number}"/>
+        <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Phone_number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="10" Content="Birth date:"/>
-        <TextBox Grid.Column="0" Grid.Row="11" Text="{Binding Birth_date}"/>
+        <TextBox Grid.Column="0" Grid.Row="11" Text="{Binding Birth_date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="11" Margin="5,0">
 
@@ -61,9 +61,10 @@
                         <GridViewColumn Header="">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Height="Auto" Width="50" Content="View" Style="{StaticResource ButtonStyle}" Command="{Binding ElementName=Root,  Path=DataContext.SaveCommand}"/>
+                                    <Button Height="Auto" Width="50" Content="View" Style="{StaticResource ButtonStyle}" Command="{Binding ElementName=Root,  Path=DataContext.ViewAppointment}" CommandParameter="{Binding Id_appointment}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
+                            
                         </GridViewColumn>
                     </GridView>
 

@@ -29,8 +29,16 @@
                     <GridViewColumn Header="Birth date" DisplayMemberBinding="{Binding Birth_date}"/>
                     <GridViewColumn Header="Patient">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate >
                                 <Button Command="{Binding ElementName=Root, Path=DataContext.SelectedCommand}" Height="Auto" Width="80" Content="View" CommandParameter="{Binding Id_patient}" Style="{StaticResource ButtonStyle}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                       
+                    </GridViewColumn>
+                    <GridViewColumn Header="Patient">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding ElementName=Root, Path=DataContext.DeletePatient}" Height="Auto" Width="80" Content="Delete" CommandParameter="{Binding Id_patient}" Style="{StaticResource ButtonStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

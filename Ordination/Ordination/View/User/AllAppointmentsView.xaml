@@ -4,22 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             >
     <UserControl.Resources>
-        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
-
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
-            <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
-                        <Condition Property="IsSelected" Value="False" />
-                        <Condition Property="IsMouseOver" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#EEEEEEEE" />
-                </MultiTrigger>
-            </Style.Triggers> -->
-        </Style>
+        <ResourceDictionary Source="UserViewResources.xaml"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,6 +15,8 @@
                   HorizontalAlignment="Left"
                   Margin="10"
                   VerticalAlignment="Bottom"
+                  SelectionMode="SingleDate"
+                  SelectedDate="{Binding SelectedDate}"
                   >
             <Calendar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5, 0">
@@ -41,20 +28,24 @@
             </Calendar.Background>
            
         </Calendar>
+        <Button Height="25" Width="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="View" Command="{Binding ViewList}"/>
         <DockPanel Grid.Row="1">
         
         <ListView DockPanel.Dock="Top"
                   AlternationCount="2"
                   ItemContainerStyle="{StaticResource ItemStyle}"
-                  ItemsSource="{Binding}"
+                  ItemsSource="{Binding AllAppointmentsList}"
+                  
                   >
 
             <ListView.View>
                 <GridView >
-                    <GridViewColumn Header="Date of appointment" />
-                    <GridViewColumn Header="Patient name" />
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id_appointment}"/>
+                        <GridViewColumn Header="Date of appointment" DisplayMemberBinding="{Binding Date}"/>
+                        <GridViewColumn Header="Patient first name" DisplayMemberBinding="{Binding Patient_first_name}"/>
+                        <GridViewColumn Header="Patient last name" DisplayMemberBinding="{Binding Patient_last_name}"/>
 
-                </GridView>
+                    </GridView>
 
             </ListView.View>
         </ListView>

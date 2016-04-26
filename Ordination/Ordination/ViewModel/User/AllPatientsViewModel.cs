@@ -13,9 +13,12 @@ namespace Ordination.ViewModel.User
     class AllPatientsViewModel : TabViewModel
     {
         RelayCommand _selectedCommand;
+        RelayCommand _deletePatient;
         UserViewModel uvm = new UserViewModel();
         Patient _selectedItem = new Patient();
         static UserDAO userDao = new UserDAO();
+
+        private static int _id_patient;
 
         private List<Patient> _allPatientList = userDao.ReturnAllPatientsDAO();
 
@@ -24,9 +27,17 @@ namespace Ordination.ViewModel.User
         }
 
         #region getset
+
+        public int Id_patient
+        {
+            get { return _id_patient; }
+            set { _id_patient = value; }
+        }
+
         public List<Patient> AllPatientList
         {
-            get { return _allPatientList; }
+            get { return _allPatientList;}
+           
             
         }
 
@@ -54,22 +65,39 @@ namespace Ordination.ViewModel.User
         }
 
         public void CommandSelected(object s)
-        { 
-            
-            /*PatientViewModel tab = uvm.ContentTab.FirstOrDefault(vm => vm is PatientViewModel)
-                as PatientViewModel;
+        {
 
-            if (tab == null)
-            {
-                tab = new PatientViewModel();
-                uvm.ContentTab.Add(tab);
-                uvm.SetActiveTab(tab);
-            }*/
-
+            _id_patient = Int32.Parse(s.ToString());
             PatientViewModel tab = new PatientViewModel();
              uvm.ContentTab.Add(tab);
            uvm.SetActiveTab(tab);
+
+            
            
+           
+        }
+
+        public int returnId()
+        {
+            return _id_patient;
+        }
+        #endregion
+
+        #region DeletePatientCommand
+        public ICommand DeletePatient
+        {
+            get
+            {
+                _deletePatient = new RelayCommand(param => PatientDelete(param));
+                return _deletePatient;
+
+            }
+        }
+
+        public void PatientDelete(object s)
+        {
+            int id = Int32.Parse(s.ToString());
+            userDao.DeletePatientDAO(id);
         }
         #endregion
 

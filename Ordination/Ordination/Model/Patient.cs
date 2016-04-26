@@ -26,43 +26,64 @@ namespace Ordination.Model
         public int Id_patient
         {
             get { return id_patient; }
-            set { id_patient = value; }
+            set { if(id_patient == value)
+                    return;
+                id_patient = value;
+            }
         }
 
         public string First_name
         {
             get { return first_name; }
-            set { first_name = value; }
+            set { if(first_name == value)
+                    return;
+                first_name = value;
+            }
         }
 
         public string Last_name
         {
             get { return last_name; }
-            set { last_name = value; }
+            set { if(last_name == value)
+                    return;
+                last_name = value;
+            }
         }
 
         public string Email
         {
             get { return email; }
-            set { email = value; }
+            set { if(email == value)
+                    return;
+                email = value;
+            }
         }
 
         public string Address
         {
             get { return address; }
-            set { address = value; }
+            set { if(address == value)
+                    return;
+                address = value;
+            }
         }
 
         public string Phone_number
         {
             get { return phone_number; }
-            set { phone_number = value; }
+            set { if(phone_number == value)
+                    return;
+                phone_number = value;
+            }
         }
 
         public string Birth_date
         {
             get { return birth_date; }
-            set { birth_date = value; }
+            set { if(birth_date == value)
+                    return;
+                birth_date = value;
+            }
         }
 
         string IDataErrorInfo.Error { get { return null; } }

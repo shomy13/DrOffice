@@ -14,7 +14,7 @@ namespace Ordination.ViewModel.User
         UserDAO userDao = new UserDAO();
         RelayCommand _addAppointment;
         Appointment _appointmant = new Appointment();
-
+        PatientViewModel pvm = new PatientViewModel();
         public AddAppointmentViewModel()
         {
         
@@ -52,7 +52,7 @@ namespace Ordination.ViewModel.User
         }
         void AppointmentAdd()
         {
-            userDao.AddAppointmentDAO(_appointmant);
+            userDao.AddAppointmentDAO(_appointmant, pvm.returnID());
         }
         #endregion
     }

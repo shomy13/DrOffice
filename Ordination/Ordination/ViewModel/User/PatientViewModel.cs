@@ -3,6 +3,7 @@ using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,51 +11,45 @@ using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
 {
-    class PatientViewModel : TabViewModel
+    class PatientViewModel : TabViewModel, IDataErrorInfo
     {
         static UserDAO userDao = new UserDAO();
         UserViewModel uvm = new UserViewModel();
-
-        private Patient _patient = userDao.ReturnOnePatientDAO();
-        private ObservableCollection<Appointment> _allAppointments = userDao.ReturnAllAppointmentsByUserDAO();
-        private Appointment _appointmentById = userDao.ReturnAppointmentByIdDAO();
+        static AllPatientsViewModel pvm = new AllPatientsViewModel();
+        private Patient _patient = userDao.ReturnOnePatientDAO(pvm.returnId());
+        private ObservableCollection<Appointment> _allAppointments = userDao.ReturnAllAppointmentsByUserDAO(pvm.returnId());
+        private Appointment _appointmentById = new Appointment();
+        private int _id_patient = pvm.returnId();
         RelayCommand _saveCommand;
         RelayCommand _addAppointment;
+        RelayCommand _viewAppointment;
 
-        #region setget
-        public string Symptoms
+        #region Constructor
+        public PatientViewModel()
         {
-            get { return _appointmentById.Symptoms; }
         }
-
-        public string Diagnosis
-        {
-            get { return _appointmentById.Diagnosis; }
-        }
-
-        public string Treatment
-        {
-            get { return _appointmentById.Treatment; }
-        }
-        public ObservableCollection<Appointment> AllAppointments
-        {
-            get { return _allAppointments;  }
-        }
-
         #endregion
+
 
         #region SaveCommand
         public ICommand SaveCommand
         {
             get
             {
-                _saveCommand = new RelayCommand(param => CommandSave());
+                _saveCommand = new RelayCommand(
+                    param => CommandSave(),
+                    param => canSave
+                    );
                 return _saveCommand;
             }
         }
         void CommandSave()
         {
-            userDao.ReturnAppointmentByIdDAO();
+            userDao.UpdatePatientDAO(_patient, pvm.returnId()); 
+        }
+        bool canSave
+        {
+            get { return _patient.IsValid; }
         }
 
         #endregion
@@ -74,9 +69,18 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
-        #region Constructor
-        public PatientViewModel()
+        #region ViewAppointmen
+        public ICommand ViewAppointment
         {
+            get { _viewAppointment = new RelayCommand(param => AppointmentView(param));
+                return _viewAppointment;
+            }
+        }
+
+        void AppointmentView(object s)
+        {
+            int id = Int32.Parse(s.ToString());
+            _appointmentById = userDao.ReturnAppointmentByIdDAO(id);
         }
         #endregion
 
@@ -151,6 +155,56 @@ namespace Ordination.ViewModel.User
                 _patient.Birth_date = value;
             }
         }
+
+        public int Id_patient
+        {
+            get { return _id_patient; }
+            set { _id_patient = value; }
+        }
+        public string Symptoms
+        {
+            get { return _appointmentById.Symptoms; }
+        }
+
+        public string Diagnosis
+        {
+            get { return _appointmentById.Diagnosis; }
+        }
+
+        public string Treatment
+        {
+            get { return _appointmentById.Treatment; }
+        }
+        public ObservableCollection<Appointment> AllAppointments
+        {
+            get { return _allAppointments; }
+        }
         #endregion
+
+        #region IDataErrorInfo
+        string IDataErrorInfo.Error
+        {
+            get { return (_patient as IDataErrorInfo).Error; }
+        }
+
+        string IDataErrorInfo.this[string propertyName]
+        {
+            get
+            {
+                string error = null;
+
+                error = (_patient as IDataErrorInfo)[propertyName];
+
+                CommandManager.InvalidateRequerySuggested();
+
+                return error;
+            }
+        }
+        #endregion
+
+        public int returnID()
+        {
+            return _id_patient;
+        }
     }
 }
