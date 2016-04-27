@@ -27,6 +27,7 @@ namespace Ordination.ViewModel.Admin
         #region Constructor
         public AdminViewModel()
         {
+            base.DisplayText = "Add new doctor";
         }
         #endregion
 
@@ -85,8 +86,10 @@ namespace Ordination.ViewModel.Admin
         void NewDoctorAdd()
         {
             AddDoctorViewModel tab = new AddDoctorViewModel();
+            
             this.ContentTab.Add(tab);
             this.SetActiveTab(tab);
+            
         }
         #endregion
 

@@ -247,7 +247,7 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT appointment.id_appointment, appointment.date, patient.last_name, patient.first_name
+                        cmd.CommandText = @"SELECT appointment.id_appointment, appointment.date, patient.last_name, patient.first_name, patient.id_patient
                                             FROM appointment
                                             INNER JOIN chart
                                             ON appointment.fk_id_chart = chart.id_chart
@@ -266,7 +266,7 @@ namespace Ordination.Model.DAO
                                 _appointment.Date = Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy");
                                 _appointment.Patient_first_name = reader["first_name"].ToString();
                                 _appointment.Patient_last_name = reader["last_name"].ToString();
-
+                                _appointment.Patient_id_patient = reader.GetInt32(4);
                                 _list.Add(_appointment);
 
                                 Console.WriteLine(reader["date"]+""+reader["first_name"]);
@@ -695,7 +695,7 @@ namespace Ordination.Model.DAO
                                             INNER JOIN patient
                                             ON chart.fk_id_patient = patient.id_patient
                                             WHERE
-                                            patient.id_patient = "+ id+"); DELETE FROM chart WHERE id_chart=(SELECT id_chart FROM chart INNER JOIN patient ON chart.fk_id_patient = patient.id_patient WHERE patient.id_patient = "+id+");DELETE FROM patient WHERE id_patient = " + id + "";
+                                            patient.id_patient = "+ id+"); DELETE FROM chart WHERE id_chart=(SELECT id_chart FROM chart INNER JOIN patient ON chart.fk_id_patient = patient.id_patient WHERE patient.id_patient = "+id+"); DELETE FROM patient WHERE id_patient = " + id + "";
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Patient with id=" + id + " successfully deleted!");
                         con.Close();

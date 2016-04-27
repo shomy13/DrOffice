@@ -27,6 +27,7 @@ namespace Ordination.ViewModel.User
         #region Constructor
         public PatientViewModel()
         {
+            base.DisplayText = String.Format("{0} {1}", _patient.Last_name, _patient.First_name);
         }
         #endregion
 
@@ -45,7 +46,9 @@ namespace Ordination.ViewModel.User
         }
         void CommandSave()
         {
-            userDao.UpdatePatientDAO(_patient, pvm.returnId()); 
+            userDao.UpdatePatientDAO(_patient, pvm.returnId());
+            base.DisplayText = string.Format("{0} {1}", _patient.Last_name, _patient.First_name);
+            OnPropertyChanged("DisplayText");
         }
         bool canSave
         {
@@ -81,6 +84,10 @@ namespace Ordination.ViewModel.User
         {
             int id = Int32.Parse(s.ToString());
             _appointmentById = userDao.ReturnAppointmentByIdDAO(id);
+            OnPropertyChanged("Symptoms");
+            OnPropertyChanged("Diagnosis");
+            OnPropertyChanged("Treatment");
+            
         }
         #endregion
 

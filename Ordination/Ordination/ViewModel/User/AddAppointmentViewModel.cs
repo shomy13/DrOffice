@@ -17,7 +17,7 @@ namespace Ordination.ViewModel.User
         PatientViewModel pvm = new PatientViewModel();
         public AddAppointmentViewModel()
         {
-        
+            base.DisplayText = "Add appointment";
         }
 
         #region getset
@@ -46,13 +46,20 @@ namespace Ordination.ViewModel.User
         {
             get
             {
-                _addAppointment = new RelayCommand(param => AppointmentAdd());
+                _addAppointment = new RelayCommand(
+                    param => AppointmentAdd(),
+                    param=>CanSave);
                 return _addAppointment;
             }
         }
         void AppointmentAdd()
         {
             userDao.AddAppointmentDAO(_appointmant, pvm.returnID());
+        }
+
+        bool CanSave
+        {
+            get { return _appointmant.IsValid; }
         }
         #endregion
     }

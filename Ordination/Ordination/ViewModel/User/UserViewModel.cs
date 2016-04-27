@@ -95,6 +95,7 @@ namespace Ordination.ViewModel.User
             //PatientViewModel tab = new PatientViewModel();
             this.ContentTab.Add(tab);
              this.SetActiveTab(tab);
+            
 
         }
         #endregion

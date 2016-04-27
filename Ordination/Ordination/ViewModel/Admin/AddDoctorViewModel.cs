@@ -14,12 +14,13 @@ namespace Ordination.ViewModel.Admin
     {
         readonly Doctor _doctor = new Doctor();
         AdminDAO adminDao = new AdminDAO();
-
+        AllDoctorsVewModel dvm = new AllDoctorsVewModel();
         RelayCommand _addNewDoctorUC;
 
         #region Constructor
         public AddDoctorViewModel()
         {
+            base.DisplayText = "Add Doctor";
         }
         #endregion
 
@@ -134,7 +135,9 @@ namespace Ordination.ViewModel.Admin
 
         void NewDoctorAdd()
         {
-            adminDao.AddDoctorDAO(_doctor);
+            //adminDao.AddDoctorDAO(_doctor);
+            dvm.NewDoctorFunction(_doctor); 
+            
         }
 
         bool CanSave

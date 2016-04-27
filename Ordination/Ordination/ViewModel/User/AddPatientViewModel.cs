@@ -17,6 +17,10 @@ namespace Ordination.ViewModel.User
         Patient _patient = new Patient();
 
         RelayCommand _addNewPatientUC;
+        public AddPatientViewModel()
+        {
+            base.DisplayText = "Add patient";
+        }
 
         #region getset
         public string First_name
@@ -110,6 +114,9 @@ namespace Ordination.ViewModel.User
             userDao.AddPatientDAO(_patient);
            
             userDao.AddChartDAO(userDao.ReturnLastPatientDAO());
+            
+            base.DisplayText = String.Format("{0} {1}", _patient.First_name, _patient.Last_name);
+            OnPropertyChanged("DisplayText");
         }
 
         bool CanSave

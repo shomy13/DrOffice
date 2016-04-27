@@ -22,6 +22,7 @@ namespace Ordination.ViewModel.User
         #region Constructor
         public UserChangePasswordViewModel()
         {
+            base.DisplayText = "Change password";
         }
         #endregion
 

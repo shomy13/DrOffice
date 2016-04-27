@@ -108,6 +108,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+   
     
    
     <DataTemplate x:Key="ClosableTabTemplate">
@@ -127,7 +129,7 @@
                 Style="{StaticResource ButtonStyle}"
                 />
             <ContentPresenter
-                Content="Tab"
+                Content="{Binding Path=DisplayText}"
                 VerticalAlignment="Center"
                 />
         </DockPanel>

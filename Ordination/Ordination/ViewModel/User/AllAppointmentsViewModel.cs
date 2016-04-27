@@ -13,15 +13,17 @@ namespace Ordination.ViewModel.User
     class AllAppointmentsViewModel : TabViewModel
     {
         UserDAO userDao = new UserDAO();
-        //static DateTime dt = _selectedDate;
+        UserViewModel uvm = new UserViewModel();
         RelayCommand _viewList;
+        RelayCommand _selectedAppointmentCommand;
+        private static int _id_patient =0;
         private ObservableCollection<Appointment> _allAppointmentsList = new ObservableCollection<Appointment>();
-            //userDao.ReturnAllAppointmentsDAO(dt.ToShortDateString());
+        
         
         static private DateTime _selectedDate;
         #region Connstructor
         public AllAppointmentsViewModel()
-        {
+        {base.DisplayText = "All apointments";
         }
         #endregion
 
@@ -37,7 +39,24 @@ namespace Ordination.ViewModel.User
         void ListView()
         {
             _allAppointmentsList = userDao.ReturnAllAppointmentsDAO(SelectedDate);
-            OnPropertyChanged("_allAppointmentsList");
+            OnPropertyChanged("AllAppointmentsList");
+        }
+
+        public ICommand SelectedAppointmentCommand
+        {
+            get { _selectedAppointmentCommand = new RelayCommand(param => AppointmentSelected(param));
+                return _selectedAppointmentCommand;
+            }
+        }
+
+        void AppointmentSelected(object s)
+        {
+            _id_patient = Int32.Parse(s.ToString());
+            PatientViewModel tab = new PatientViewModel();
+            uvm.ContentTab.Add(tab);
+            uvm.SetActiveTab(tab);
+            _id_patient = 0;
+           
         }
 
         public ObservableCollection<Appointment> AllAppointmentsList
@@ -53,9 +72,19 @@ namespace Ordination.ViewModel.User
             {
                 _selectedDate = value;
                 OnPropertyChanged("SelectedDate");
-
-                Console.WriteLine("aa" + SelectedDate.ToShortDateString());
             }
+        }
+
+        public int Id_patient
+        {
+            get { return _id_patient; }
+            set { _id_patient = value; }
+        }
+
+        public int returnInt()
+        {
+            
+            return Id_patient;
         }
     }
 }

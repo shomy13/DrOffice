@@ -109,6 +109,7 @@ namespace Ordination.ViewModel.User
         #region Constructor
         public DoctorViewModel()
         {
+            base.DisplayText = String.Format("{0},{1}", _doctor.First_name, _doctor.Last_name);
         }
         #endregion
 
@@ -126,6 +127,9 @@ namespace Ordination.ViewModel.User
         void DoctorUpdate()
         {
             userDao.UpdateDoctorDAO(_doctor);
+            base.DisplayText = String.Format("{0},{1}", _doctor.First_name, _doctor.Last_name);
+            OnPropertyChanged("DisplayText");
+
         }
         #endregion
 

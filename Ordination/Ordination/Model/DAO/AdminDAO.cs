@@ -87,9 +87,11 @@ namespace Ordination.Model.DAO
                                 d.User_name = reader["user_name"].ToString();
                                 list.Add(d);
 
+
                             }
                         }
-                    
+                        for (int i = 0; i < list.Count(); i++)
+                            Console.WriteLine(list[i].First_name);
                         con.Close();
                     }
                     catch (Exception ex)

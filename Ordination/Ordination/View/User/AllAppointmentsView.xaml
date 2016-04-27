@@ -6,10 +6,12 @@
     <UserControl.Resources>
         <ResourceDictionary Source="UserViewResources.xaml"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Name="Root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            
         </Grid.RowDefinitions>
         <Calendar Grid.Row="0" 
                   HorizontalAlignment="Left"
@@ -28,8 +30,8 @@
             </Calendar.Background>
            
         </Calendar>
-        <Button Height="25" Width="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="View" Command="{Binding ViewList}"/>
-        <DockPanel Grid.Row="1">
+        <Button  Grid.Row="1" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="View" Command="{Binding ViewList}" Style="{StaticResource ButtonStyle}"/>
+        <DockPanel Grid.Row="2">
         
         <ListView DockPanel.Dock="Top"
                   AlternationCount="2"
@@ -44,6 +46,13 @@
                         <GridViewColumn Header="Date of appointment" DisplayMemberBinding="{Binding Date}"/>
                         <GridViewColumn Header="Patient first name" DisplayMemberBinding="{Binding Patient_first_name}"/>
                         <GridViewColumn Header="Patient last name" DisplayMemberBinding="{Binding Patient_last_name}"/>
+                        <GridViewColumn Header="Patient">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding ElementName=Root, Path=DataContext.SelectedAppointmentCommand}" Height="Auto" Width="80" Content="View" CommandParameter="{Binding Patient_id_patient}" Style="{StaticResource ButtonStyle}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
                     </GridView>
 

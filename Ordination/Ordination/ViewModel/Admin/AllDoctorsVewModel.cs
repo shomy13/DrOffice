@@ -12,36 +12,42 @@ namespace Ordination.ViewModel.Admin
 {
     class AllDoctorsVewModel : TabViewModel
     {
-        static AdminDAO adminDao = new AdminDAO();
+        
 
-        private ObservableCollection<Doctor> _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+        AdminDAO adminDao = new AdminDAO();
+
+        private ObservableCollection<Doctor> _allDoctorsList = new ObservableCollection<Doctor>();
+        //_allDoctorsList = adminDao.ReturnAllDoctorsDAO();
         private Doctor _selectedDoctor = new Doctor();
 
         
 
         public ObservableCollection<Doctor> AllDoctorsList
         {
+            
+
             get { return _allDoctorsList; }
+            set { _allDoctorsList = value;
+            }
         }
 
         public Doctor DoctorSelected
         {
             get { return _selectedDoctor; }
             set { _selectedDoctor = value;
-                OnPropertyChanged("SelectedDoctor");
             }
         }
 
-        /*public List<Doctor> AllDoctorsList
-        {
-            get { return _allDoctorsList; }
-        }*/
+      
 
         RelayCommand _deleteDoctorUC;
 
         #region Constructor
         public AllDoctorsVewModel()
         {
+            base.DisplayText = "All Doctors";
+            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+            OnPropertyChanged("AllDoctorsList");
         }
         #endregion
 
@@ -58,7 +64,16 @@ namespace Ordination.ViewModel.Admin
         void DoctorDelete()
         {
             adminDao.DeleteDoctorDAO(DoctorSelected.Id_doctor);
+            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+            OnPropertyChanged("AllDoctorsList");
+            
         }
         #endregion
+        public void NewDoctorFunction(Doctor doc)
+        {
+            adminDao.AddDoctorDAO(doc);
+            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+            OnPropertyChanged("AllDoctorsList");
+        }
     }
 }

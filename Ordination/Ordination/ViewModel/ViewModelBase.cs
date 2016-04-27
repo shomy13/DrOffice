@@ -9,6 +9,9 @@ namespace Ordination.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
+        public virtual string DisplayText { get; protected set; }
+        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

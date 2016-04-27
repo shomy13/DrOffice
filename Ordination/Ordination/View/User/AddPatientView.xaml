@@ -41,12 +41,12 @@
         <ContentPresenter Grid.Row="9" Grid.Column="1" Content="{Binding ElementName=Phone_number_txt, Path=(Validation.Errors).CurrentItem}"/>
         <ContentPresenter Grid.Row="11" Grid.Column="1" Content="{Binding ElementName=Birth_date_txt, Path=(Validation.Errors).CurrentItem}"/>
 
-        <TextBox x:Name="First_name_txt" Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding First_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="Last_name_txt" Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding Last_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="Address_txt" Grid.Column="1" Grid.Row="4" Margin="2" Text="{Binding Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="Email_txt" Grid.Column="1" Grid.Row="6" Margin="2" Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="Phone_number_txt" Grid.Column="1" Grid.Row="8" Margin="2" Text="{Binding Phone_number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="Birth_date_txt" Grid.Column="1" Grid.Row="10" Margin="2" Text="{Binding Birth_date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="First_name_txt" Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding First_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
+        <TextBox x:Name="Last_name_txt" Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding Last_name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
+        <TextBox x:Name="Address_txt" Grid.Column="1" Grid.Row="4" Margin="2" Text="{Binding Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
+        <TextBox x:Name="Email_txt" Grid.Column="1" Grid.Row="6" Margin="2" Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
+        <TextBox x:Name="Phone_number_txt" Grid.Column="1" Grid.Row="8" Margin="2" Text="{Binding Phone_number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
+        <TextBox x:Name="Birth_date_txt" Grid.Column="1" Grid.Row="10" Margin="2" Text="{Binding Birth_date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>
 
         <StackPanel Grid.ColumnSpan="2" Grid.Row="12" HorizontalAlignment="Right">
             <Button Width="100" Content="Add" Style="{StaticResource ButtonStyle}" Command="{Binding AddNewPatientUC}"/>

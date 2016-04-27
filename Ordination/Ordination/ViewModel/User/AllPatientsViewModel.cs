@@ -17,13 +17,14 @@ namespace Ordination.ViewModel.User
         UserViewModel uvm = new UserViewModel();
         Patient _selectedItem = new Patient();
         static UserDAO userDao = new UserDAO();
-
+        AllAppointmentsViewModel avm = new AllAppointmentsViewModel();
         private static int _id_patient;
 
         private List<Patient> _allPatientList = userDao.ReturnAllPatientsDAO();
 
         public AllPatientsViewModel()
         {
+            base.DisplayText = "All patients";
         }
 
         #region getset
@@ -78,7 +79,8 @@ namespace Ordination.ViewModel.User
         }
 
         public int returnId()
-        {
+        {   if (avm.returnInt() != 0)
+                return avm.returnInt();
             return _id_patient;
         }
         #endregion
@@ -98,6 +100,8 @@ namespace Ordination.ViewModel.User
         {
             int id = Int32.Parse(s.ToString());
             userDao.DeletePatientDAO(id);
+            _allPatientList = userDao.ReturnAllPatientsDAO();
+            OnPropertyChanged("AllPatientList");
         }
         #endregion
 

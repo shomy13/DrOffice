@@ -49,7 +49,7 @@ namespace Ordination
               adminWindow.DataContext = adminViewModel;
         
             userWindow.Show();
-            // adminWindow.Show();
+           // adminWindow.Show();
 
           }
 
