@@ -65,6 +65,7 @@ namespace Ordination.ViewModel.Admin
 
         void SetActiveTab(TabViewModel tab)
         {
+            
             Debug.Assert(this.ContentTab.Contains(tab));
 
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.ContentTab);

@@ -11,15 +11,18 @@
                   DockPanel.Dock="Top"
                   AlternationCount="2"
                   ItemContainerStyle="{StaticResource ItemStyle}"
-                  ItemsSource="{Binding AllDoctorsList}"
+                  ItemsSource="{Binding AllDoctorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectionMode="Single"
                   SelectedItem="{Binding DoctorSelected}"
-                  
                   >
+            <ListView.Resources>
+                <ResourceDictionary Source="AdminViewResources.xaml"/>
+            </ListView.Resources>
             
             <ListView.View>
+                
                 <GridView >
-                    <GridViewColumn Header="ID" DisplayMemberBinding ="{Binding Id_doctor}"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding ="{Binding Id_doctor}" />
                     <GridViewColumn Header="First Name" DisplayMemberBinding ="{Binding First_name}"/>
                     <GridViewColumn Header="Last Name" DisplayMemberBinding ="{Binding Last_name}"/>
                     <GridViewColumn Header="Address" DisplayMemberBinding ="{Binding Address}"/>

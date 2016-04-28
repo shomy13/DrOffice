@@ -135,8 +135,10 @@ namespace Ordination.ViewModel.Admin
 
         void NewDoctorAdd()
         {
-            //adminDao.AddDoctorDAO(_doctor);
-            dvm.NewDoctorFunction(_doctor); 
+           // adminDao.AddDoctorDAO(_doctor);
+
+             dvm.NewDoctorFunction(_doctor);
+            
             
         }
 

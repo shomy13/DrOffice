@@ -177,9 +177,9 @@ namespace Ordination.Model.DAO
 
         #region ReturnAllPatients
 
-        public List<Patient> ReturnAllPatientsDAO()
+        public ObservableCollection<Patient> ReturnAllPatientsDAO()
         {
-            List<Patient> list = new List<Patient>();
+            ObservableCollection<Patient> list = new ObservableCollection<Patient>();
             
 
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))

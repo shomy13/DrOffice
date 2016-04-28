@@ -33,7 +33,8 @@ namespace Ordination.Model.DAO
                         con.Open();
 
                         cmd.CommandText = String.Format(" INSERT INTO doctor (first_name, last_name, address, email, phone_number, birth_date, user_name, password) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', '{7}')",
-                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name, d.Password);
+                           d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name, d.Password);
+                         
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Doctor successfully added!");
                         con.Close();

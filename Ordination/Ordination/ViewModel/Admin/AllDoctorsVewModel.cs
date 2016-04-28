@@ -3,6 +3,7 @@ using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,11 @@ namespace Ordination.ViewModel.Admin
     {
         
 
-        AdminDAO adminDao = new AdminDAO();
+       static AdminDAO adminDao = new AdminDAO();
 
-        private ObservableCollection<Doctor> _allDoctorsList = new ObservableCollection<Doctor>();
-        //_allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+        private ObservableCollection<Doctor> _allDoctorsList =
+            //new ObservableCollection<Doctor>();
+         adminDao.ReturnAllDoctorsDAO();
         private Doctor _selectedDoctor = new Doctor();
 
         
@@ -28,6 +30,7 @@ namespace Ordination.ViewModel.Admin
 
             get { return _allDoctorsList; }
             set { _allDoctorsList = value;
+                OnPropertyChanged("_allDoctorList");
             }
         }
 
@@ -41,15 +44,20 @@ namespace Ordination.ViewModel.Admin
       
 
         RelayCommand _deleteDoctorUC;
+        
 
         #region Constructor
         public AllDoctorsVewModel()
         {
             base.DisplayText = "All Doctors";
-            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
-            OnPropertyChanged("AllDoctorsList");
+            // _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+            // OnPropertyChanged("AllDoctorsList");
+            
         }
         #endregion
+
+      
+
 
         #region DeleteDoctor
         public ICommand DeleteDoctorUC
@@ -63,17 +71,23 @@ namespace Ordination.ViewModel.Admin
 
         void DoctorDelete()
         {
-            adminDao.DeleteDoctorDAO(DoctorSelected.Id_doctor);
-            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+           Doctor d = new Doctor();
+           
+           adminDao.DeleteDoctorDAO(DoctorSelected.Id_doctor);
+           _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
             OnPropertyChanged("AllDoctorsList");
             
         }
         #endregion
+        
+
         public void NewDoctorFunction(Doctor doc)
         {
             adminDao.AddDoctorDAO(doc);
-            _allDoctorsList = adminDao.ReturnAllDoctorsDAO();
+            _allDoctorsList.Add(doc);
             OnPropertyChanged("AllDoctorsList");
+            
+           
         }
     }
 }

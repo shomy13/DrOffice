@@ -2,10 +2,13 @@
 using Ordination.Model.DAO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
@@ -19,14 +22,24 @@ namespace Ordination.ViewModel.User
         static UserDAO userDao = new UserDAO();
         AllAppointmentsViewModel avm = new AllAppointmentsViewModel();
         private static int _id_patient;
+        private string _textSearch;
+       private ObservableCollection<Patient> _allPatientList =
+           // new ObservableCollection<Patient>();
+            userDao.ReturnAllPatientsDAO();
 
-        private List<Patient> _allPatientList = userDao.ReturnAllPatientsDAO();
+      
+
+         
+       
 
         public AllPatientsViewModel()
         {
+                
+
             base.DisplayText = "All patients";
         }
 
+       
         #region getset
 
         public int Id_patient
@@ -35,12 +48,20 @@ namespace Ordination.ViewModel.User
             set { _id_patient = value; }
         }
 
-        public List<Patient> AllPatientList
+       
+
+     
+
+        public ObservableCollection<Patient> AllPatientList
         {
-            get { return _allPatientList;}
+            get {
+                
+                return _allPatientList;}
            
-            
+           
         }
+
+           
 
         public Patient SelectedItem
         {
@@ -105,5 +126,7 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
+        
+      
     }
 }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              Height="320" Width="300"
+             Background="AliceBlue"
              >
     <UserControl.Resources>
         <ResourceDictionary Source="UserViewResources.xaml"/>

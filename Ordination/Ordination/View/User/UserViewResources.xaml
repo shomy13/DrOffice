@@ -31,21 +31,18 @@
         <vW:AddAppointmentView/>
     </DataTemplate>
     <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
-
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="AliceBlue"/>
+    </Style>
 
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Background" Value="AliceBlue"/>
+        <Setter Property="Foreground" Value="Blue"/>
+    </Style>
 
-        <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
-                        <Condition Property="IsSelected" Value="False" />
-                        <Condition Property="IsMouseOver" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#EEEEEEEE" />
-                </MultiTrigger>
-            </Style.Triggers> -->
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="Blue"/>
     </Style>
 
     <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
@@ -109,7 +106,7 @@
         </Setter>
     </Style>
 
-   
+    
     
    
     <DataTemplate x:Key="ClosableTabTemplate">
@@ -136,6 +133,7 @@
     </DataTemplate>
     <DataTemplate x:Key="TabTemplate">
         <TabControl
+            Background="AliceBlue"
             IsSynchronizedWithCurrentItem="True"
             ItemsSource="{Binding}"
             ItemTemplate="{StaticResource ClosableTabTemplate}"
