@@ -75,7 +75,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region ReturnOneDoctor
-        public Doctor ReturnDoctorDAO()
+        public Doctor ReturnDoctorDAO(int id)
         {
             Doctor d = new Doctor();
 
@@ -87,7 +87,7 @@ namespace Ordination.Model.DAO
                     {
                         con.Open();
 
-                        cmd.CommandText = @"SELECT * FROM doctor WHERE id_doctor=1";
+                        cmd.CommandText = @"SELECT * FROM doctor WHERE id_doctor ="+id+"";
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
@@ -441,6 +441,43 @@ namespace Ordination.Model.DAO
         }
         #endregion
 
+        #region AddDoctor
+        public void AddDoctorDAO(Doctor d)
+        {
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = String.Format(" INSERT INTO doctor (first_name, last_name, address, email, phone_number, birth_date, user_name, password) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', '{7}')",
+                           d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name, d.Password);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Doctor successfully added!");
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region UpdateDoctor
         public void UpdateDoctorDAO( Doctor d)
         {
@@ -716,6 +753,60 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
+        }
+        #endregion
+
+        #region DoctorExists
+        public int DoctorExistsDAO(string user_name, string password)
+        {
+
+
+            int id = 0;
+            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        cmd.CommandText = @"SELECT * FROM doctor WHERE user_name='" + user_name + "' and password='" + password + "'";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+
+
+                                if (reader == null)
+                                    id = 0;
+                                else
+                                    id = reader.GetInt32(0);
+
+                            }
+
+                        }
+
+
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+
+                    }
+                    finally
+                    {
+                        if (con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+            }
+            return id;
         }
         #endregion
     }

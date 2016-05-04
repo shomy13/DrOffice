@@ -28,7 +28,7 @@ namespace Ordination.ViewModel
             }
         }
 
-        void OnRequestClose()
+        protected void OnRequestClose()
         {
             EventHandler handler = this.RequestClose;
             if (handler != null)

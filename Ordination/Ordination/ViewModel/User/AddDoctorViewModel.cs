@@ -10,14 +10,17 @@ using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
 {
-    class DoctorViewModel : TabViewModel, IDataErrorInfo
+    class AddDoctorViewModel : TabViewModel, IDataErrorInfo
     {
-        
-        static UserDAO userDao = new UserDAO();
-        
-        Doctor _doctor = userDao.ReturnDoctorDAO(idLogedIn);
-
-        
+        Doctor _doctor = new Doctor();
+        RelayCommand _addNewDoctor;
+        UserDAO userDao = new UserDAO();
+        #region Constructor
+        public AddDoctorViewModel()
+        {
+            base.DisplayText = "Add doctor";
+        }
+        #endregion
 
         #region getset
         public string First_name
@@ -101,35 +104,45 @@ namespace Ordination.ViewModel.User
 
                 _doctor.User_name = value;
             }
-        
         }
-        #endregion
-        RelayCommand _updateDoctorUC;
 
-        #region Constructor
-        public DoctorViewModel()
+        public string Password
         {
-            base.DisplayText = String.Format("{0},{1}", _doctor.First_name, _doctor.Last_name);
+            get { return _doctor.Password; }
+            set
+            {
+                if (value == _doctor.Password)
+                    return;
+
+                _doctor.Password = value;
+            }
         }
         #endregion
 
-        #region UpdateDoctorUC
-        public ICommand UpdateDoctorUC
+        #region AddNewDoctor
+        public ICommand AddNewDoctor
         {
             get
             {
-                _updateDoctorUC = new RelayCommand(param => this.DoctorUpdate());
-                return _updateDoctorUC;
+                _addNewDoctor = new RelayCommand(
+                    param => this.NewDoctorAdd(),
+                    param => this.CanSave);
+                return _addNewDoctor;
             }
         }
 
-        
-        void DoctorUpdate()
+        void NewDoctorAdd()
         {
-            userDao.UpdateDoctorDAO(_doctor);
-            base.DisplayText = String.Format("{0},{1}", _doctor.First_name, _doctor.Last_name);
-            OnPropertyChanged("DisplayText");
+            userDao.AddDoctorDAO(_doctor);
 
+           // dvm.NewDoctorFunction(_doctor);
+
+
+        }
+
+        bool CanSave
+        {
+            get { return _doctor.IsValid; }
         }
         #endregion
 

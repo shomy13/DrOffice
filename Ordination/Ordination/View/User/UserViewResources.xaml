@@ -30,6 +30,14 @@
     <DataTemplate DataType="{x:Type vm:AddAppointmentViewModel}">
         <vW:AddAppointmentView/>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:AddDoctorViewModel}">
+        <vW:AddNewDoctorView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:LogInViewModel}">
+        <vW:LogIn/>
+    </DataTemplate>
     <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="AliceBlue"/>

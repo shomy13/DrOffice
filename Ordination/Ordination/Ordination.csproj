@@ -88,15 +88,16 @@
     <Compile Include="ViewModel\Admin\AdminViewModel.cs" />
     <Compile Include="ViewModel\Admin\AllDoctorsVewModel.cs" />
     <Compile Include="ViewModel\Admin\ChangePasswordViewModel.cs" />
-    <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="ViewModel\TabViewModel.cs" />
     <Compile Include="ViewModel\UI\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModel\UI\SelectionBehavior.cs" />
     <Compile Include="ViewModel\User\AddAppointmentViewModel.cs" />
+    <Compile Include="ViewModel\User\AddDoctorViewModel.cs" />
     <Compile Include="ViewModel\User\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\User\AllAppointmentsViewModel.cs" />
     <Compile Include="ViewModel\User\AllPatientsViewModel.cs" />
     <Compile Include="ViewModel\User\DoctorViewModel.cs" />
+    <Compile Include="ViewModel\User\LogInViewModel.cs" />
     <Compile Include="ViewModel\User\PatientViewModel.cs" />
     <Compile Include="ViewModel\User\UserChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\User\UserViewModel.cs" />
@@ -116,6 +117,9 @@
     <Compile Include="View\User\AddAppointmentView.xaml.cs">
       <DependentUpon>AddAppointmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\User\AddNewDoctorView.xaml.cs">
+      <DependentUpon>AddNewDoctorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\User\AddPatientView.xaml.cs">
       <DependentUpon>AddPatientView.xaml</DependentUpon>
     </Compile>
@@ -130,6 +134,9 @@
     </Compile>
     <Compile Include="View\User\DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\LogIn.xaml.cs">
+      <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\User\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
@@ -180,6 +187,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\User\AddNewDoctorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\User\AddPatientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\User\DoctorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\LogIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

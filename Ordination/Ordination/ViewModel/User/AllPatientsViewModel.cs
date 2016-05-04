@@ -17,6 +17,7 @@ namespace Ordination.ViewModel.User
     {
         RelayCommand _selectedCommand;
         RelayCommand _deletePatient;
+        RelayCommand _searchCommand;
         UserViewModel uvm = new UserViewModel();
         Patient _selectedItem = new Patient();
         static UserDAO userDao = new UserDAO();
@@ -25,44 +26,40 @@ namespace Ordination.ViewModel.User
         private string _textSearch;
        private ObservableCollection<Patient> _allPatientList =
            // new ObservableCollection<Patient>();
-            userDao.ReturnAllPatientsDAO();
+           userDao.ReturnAllPatientsDAO();
 
-      
 
-         
-       
-
+        #region Constructor
         public AllPatientsViewModel()
         {
                 
 
             base.DisplayText = "All patients";
         }
+        #endregion
 
-       
         #region getset
 
+        #region ICollectionView
+        private ICollectionView _allPatientsView { get; set; }
+        #endregion
+
+        #region IdPatient
         public int Id_patient
         {
             get { return _id_patient; }
             set { _id_patient = value; }
         }
+        #endregion
 
-       
-
-     
-
+        #region ObservableCollection
         public ObservableCollection<Patient> AllPatientList
         {
-            get {
-                
-                return _allPatientList;}
-           
-           
+            get {return _allPatientList;}
         }
+        #endregion
 
-           
-
+        #region Patient
         public Patient SelectedItem
         {
             get { return _selectedItem; }
@@ -72,8 +69,38 @@ namespace Ordination.ViewModel.User
                // OnPropertyChanged("SelectedItem");
             }
         }
+
         #endregion
 
+        #region TextSearch
+        public string TextSearch
+        {
+            get { return _textSearch; }
+            set { _textSearch = value;
+                
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region Filter
+        private bool FilterPatient(object item)
+        {
+
+            Patient p = item as Patient;
+
+            //if (p.Last_name.Contains(TextSearch))
+            if(p.Last_name.ToLower().Contains(TextSearch.ToLower()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
 
         #region SelectedCommand
         public ICommand SelectedCommand
@@ -94,9 +121,6 @@ namespace Ordination.ViewModel.User
              uvm.ContentTab.Add(tab);
            uvm.SetActiveTab(tab);
 
-            
-           
-           
         }
 
         public int returnId()
@@ -126,7 +150,24 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
-        
-      
+        #region SearchCommand
+        public ICommand SearchCommand
+        {
+            get
+            {
+                _searchCommand = new RelayCommand(param => Search());
+                return _searchCommand;
+            }
+        }
+
+        public void Search()
+        {
+            this._allPatientsView = CollectionViewSource.GetDefaultView(_allPatientList);
+            this._allPatientsView.Filter = FilterPatient;
+            OnPropertyChanged("AllPatientList");
+
+        }
+        #endregion
+
     }
 }

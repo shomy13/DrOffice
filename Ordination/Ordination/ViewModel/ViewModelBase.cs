@@ -10,7 +10,8 @@ namespace Ordination.ViewModel
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public virtual string DisplayText { get; protected set; }
-        
+
+        public static int idLogedIn = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

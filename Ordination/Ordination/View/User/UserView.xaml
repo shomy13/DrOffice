@@ -18,11 +18,15 @@
                     <MenuItem Header="_List of patients" Command="{Binding ReturnAllPatients}"/>
                 </MenuItem>
                 <MenuItem Header="_Doctor">
-                    <MenuItem Header ="_Profile" Command="{Binding ReturnDoctor}"/>
+                    <MenuItem Header ="_Profile">
+                       <MenuItem Header="_View" Command="{Binding ReturnDoctor}"/>
+                        <MenuItem Header="Log_Out" Command="{Binding LogOutCommand}"/>
+                        <MenuItem Header="Log_In" Command="{Binding LogInCommand}"/>
+                    </MenuItem>
                     <MenuItem Header="_Change">
                         <MenuItem Header="_Password" Command="{Binding ChangePassword}"/>
                     </MenuItem>
-                    <MenuItem Header="_LogOut" Command="{Binding CloseCommand}"/>
+                    <MenuItem Header="_Add" Command="{Binding AddNewDoctor}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

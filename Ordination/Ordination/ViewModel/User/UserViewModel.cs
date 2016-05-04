@@ -25,10 +25,21 @@ namespace Ordination.ViewModel.User
         RelayCommand _returnAllAppointments;
         RelayCommand _returnDoctor;
         RelayCommand _changePassword;
+        RelayCommand _addNewDoctor;
+        RelayCommand _logInCommand;
+        RelayCommand _logOutCommand;
 
+        static int i = 0;
+        
         #region Constructor
         public UserViewModel()
-        {          
+        {
+            
+            if(i == 0)
+            {
+                LogIn();
+                i++;
+            }          
         }
         #endregion
 
@@ -204,6 +215,72 @@ namespace Ordination.ViewModel.User
         }
         #endregion
 
-      
+
+        #region Command AddNewDoctor
+        public ICommand AddNewDoctor
+        {
+            get
+            {
+                _addNewDoctor = new RelayCommand(param => this.NewDoctorAdd());
+                return _addNewDoctor;
+            }
+        }
+
+        void NewDoctorAdd()
+        {
+            AddDoctorViewModel tab = new AddDoctorViewModel();
+            this.ContentTab.Add(tab);
+            this.SetActiveTab(tab);
+        }
+        #endregion
+
+        #region Command LogIn
+        public ICommand LogInCommand
+        {
+            get
+            {
+                _logInCommand = new RelayCommand(param => this.LogIn());
+                return _logInCommand;
+            }
+        }
+
+        void LogIn()
+        {
+            LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+                as LogInViewModel;
+
+            if (tab == null)
+            {
+                tab = new LogInViewModel();
+                this.ContentTab.Add(tab);
+                this.SetActiveTab(tab);
+            }
+        }
+        #endregion
+
+        #region LogOutCommand
+        public ICommand LogOutCommand
+        {
+            get { _logOutCommand = new RelayCommand(param => LogOut());
+                return _logOutCommand;
+            }
+        }
+
+        void LogOut()
+        {
+            idLogedIn = 0;
+
+            LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+                as LogInViewModel;
+
+            if (tab == null)
+            {
+                tab = new LogInViewModel();
+                this.ContentTab.Add(tab);
+                this.SetActiveTab(tab);
+            }
+        }
+        #endregion
+
     }
 }
