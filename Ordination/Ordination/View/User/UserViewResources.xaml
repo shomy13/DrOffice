@@ -90,6 +90,7 @@
                             HorizontalAlignment="Center"
                             Text="{TemplateBinding Content}"
                             />
+                        
                     </Border>
                 </DataTemplate>
             </Setter.Value>

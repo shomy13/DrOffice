@@ -23,30 +23,22 @@ namespace Ordination
               base.OnStartup(e);
 
               UserView userWindow = new UserView();
-              AdminView adminWindow = new AdminView();
         
               var userViewModel = new UserViewModel();
-              var adminViewModel = new AdminViewModel();
        
 
               EventHandler userHandler = null;
-              EventHandler adminHandler = null;
               userHandler = delegate
               {
                   userViewModel.RequestClose -= userHandler;
                   userWindow.Close();
               };
-              adminHandler = delegate
-              {
-                  adminViewModel.RequestClose -= adminHandler;
-                  adminWindow.Close();
-              };
-
+              
               userViewModel.RequestClose += userHandler;
-              adminViewModel.RequestClose += adminHandler;
+
 
               userWindow.DataContext = userViewModel;
-              adminWindow.DataContext = adminViewModel;
+
         
             userWindow.Show();
            // adminWindow.Show();

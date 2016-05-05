@@ -11,6 +11,7 @@ namespace Ordination.ViewModel.User
 {
     class LogInViewModel : TabViewModel
     {
+        
         RelayCommand _logInCommand;
         UserDAO userDao = new UserDAO();
         private string _userName;
@@ -48,13 +49,14 @@ namespace Ordination.ViewModel.User
             int i = userDao.DoctorExistsDAO(UserName, Password);
             if (i == 0)
             {
-                MessageBox.Show("Wrong username or password!");
+                MessageBox.Show("Wrong username or password!","ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
             else
             {
                 idLogedIn = i;
+                
                 OnRequestClose();
-                MessageBox.Show("Welcome "+userDao.ReturnDoctorDAO(i).First_name.ToString());
+                MessageBox.Show("Welcome "+userDao.ReturnDoctorDAO(i).First_name.ToString(), "Hi!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         #endregion

@@ -15,7 +15,7 @@ namespace Ordination.ViewModel.User
         UserDAO userDao = new UserDAO();
 
         Patient _patient = new Patient();
-
+        UserViewModel uvm = new UserViewModel();
         RelayCommand _addNewPatientUC;
         public AddPatientViewModel()
         {
@@ -113,10 +113,24 @@ namespace Ordination.ViewModel.User
         {
             userDao.AddPatientDAO(_patient);
            
-            userDao.AddChartDAO(userDao.ReturnLastPatientDAO());
+            userDao.AddChartDAO(idLogedIn, userDao.ReturnLastPatientDAO());
             
             base.DisplayText = String.Format("{0} {1}", _patient.First_name, _patient.Last_name);
             OnPropertyChanged("DisplayText");
+            OnPropertyChanged("AllPatientList");
+
+            AllPatientsViewModel tab = uvm.ContentTab.FirstOrDefault(vm => vm is AllPatientsViewModel)
+                   as AllPatientsViewModel;
+
+            if (tab != null)
+            {
+                uvm.ContentTab.Remove(tab);
+                tab = new AllPatientsViewModel();
+                uvm.ContentTab.Add(tab);
+                uvm.SetActiveTab(tab);
+            }
+            
+            
         }
 
         bool CanSave

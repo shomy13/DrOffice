@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -19,6 +20,7 @@ namespace Ordination.ViewModel.User
         UserDAO userDao = new UserDAO();
         
         static ObservableCollection<TabViewModel> _tabTemplate;
+      
         
         RelayCommand _addNewPatient;
         RelayCommand _returnAllPatients;
@@ -30,7 +32,9 @@ namespace Ordination.ViewModel.User
         RelayCommand _logOutCommand;
 
         static int i = 0;
-        
+       
+      
+
         #region Constructor
         public UserViewModel()
         {
@@ -56,10 +60,7 @@ namespace Ordination.ViewModel.User
                 }
                 return _tabTemplate;
             }
-          /*  set
-            {
-                _tabTemplate = value;
-            }*/
+         
         }
         
         void OnTabChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -102,11 +103,27 @@ namespace Ordination.ViewModel.User
 
         void NewPatientAdd()
         {
-            AddPatientViewModel tab = new AddPatientViewModel();
-            //PatientViewModel tab = new PatientViewModel();
-            this.ContentTab.Add(tab);
-             this.SetActiveTab(tab);
-            
+            if (idLogedIn != 0)
+            {
+                AddPatientViewModel tab = new AddPatientViewModel();
+                this.ContentTab.Add(tab);
+                this.SetActiveTab(tab);
+            }else
+            {
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+               as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }else if (tab!=null)
+                {
+                    this.SetActiveTab(tab);
+                }
+                MessageBox.Show("Log In first!", "ERROR",MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
         #endregion
@@ -123,17 +140,36 @@ namespace Ordination.ViewModel.User
 
         void AllPatientsReturn()
         {
-            userDao.ReturnAllPatientsDAO();
 
-            AllPatientsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllPatientsViewModel)
-                as AllPatientsViewModel;
-
-            if(tab == null)
+            if (idLogedIn != 0)
             {
-                tab = new AllPatientsViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
+                AllPatientsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllPatientsViewModel)
+                    as AllPatientsViewModel;
+
+                if (tab == null)
+                {
+                    tab = new AllPatientsViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+            }else
+            {
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+              as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+                else if (tab != null)
+                {
+                    this.SetActiveTab(tab);
+                }
+                MessageBox.Show("Log In first!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+           
         }
         #endregion
 
@@ -149,19 +185,38 @@ namespace Ordination.ViewModel.User
 
         void AllAppointmentsReturn()
         {
-            //userDao.ReturnAllAppointmentsDAO();
 
-            AllAppointmentsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllAppointmentsViewModel)
-                as AllAppointmentsViewModel;
-
-            if(tab == null)
+            if (idLogedIn != 0)
             {
-                tab = new AllAppointmentsViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
+                AllAppointmentsViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is AllAppointmentsViewModel)
+                    as AllAppointmentsViewModel;
+
+                if (tab == null)
+                {
+                    tab = new AllAppointmentsViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+            }
+            else
+            {
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+              as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+                else if (tab != null)
+                {
+                    this.SetActiveTab(tab);
+                }
+                MessageBox.Show("Log In first!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            Console.WriteLine(ContentTab.Count());
+            
         }
         #endregion
 
@@ -177,16 +232,34 @@ namespace Ordination.ViewModel.User
 
         void DoctorReturn()
         {
-            
 
-            DoctorViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is DoctorViewModel)
-                as DoctorViewModel;
-
-            if (tab == null)
+            if (idLogedIn != 0)
             {
-                tab = new DoctorViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
+                DoctorViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is DoctorViewModel)
+                    as DoctorViewModel;
+
+                if (tab == null)
+                {
+                    tab = new DoctorViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+            }else
+            {
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+              as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+                else if (tab != null)
+                {
+                    this.SetActiveTab(tab);
+                }
+                MessageBox.Show("Log In first!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -203,14 +276,34 @@ namespace Ordination.ViewModel.User
 
         void PasswordChange()
         {
-         UserChangePasswordViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is UserChangePasswordViewModel)
-                as UserChangePasswordViewModel;
-
-            if (tab == null)
+            if (idLogedIn != 0)
             {
-                tab = new UserChangePasswordViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
+                UserChangePasswordViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is UserChangePasswordViewModel)
+                       as UserChangePasswordViewModel;
+
+                if (tab == null)
+                {
+                    tab = new UserChangePasswordViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+            }
+            else
+            {
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+              as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
+                else if (tab != null)
+                {
+                    this.SetActiveTab(tab);
+                }
+                MessageBox.Show("Log In first!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -246,15 +339,22 @@ namespace Ordination.ViewModel.User
 
         void LogIn()
         {
-            LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
-                as LogInViewModel;
-
-            if (tab == null)
+            if (idLogedIn == 0)
             {
-                tab = new LogInViewModel();
-                this.ContentTab.Add(tab);
-                this.SetActiveTab(tab);
+                LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
+                    as LogInViewModel;
+
+                if (tab == null)
+                {
+                    tab = new LogInViewModel();
+                    this.ContentTab.Add(tab);
+                    this.SetActiveTab(tab);
+                }
             }
+            else
+            {
+                MessageBox.Show("You're already logged in!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);          
+                    }
         }
         #endregion
 
@@ -269,6 +369,11 @@ namespace Ordination.ViewModel.User
         void LogOut()
         {
             idLogedIn = 0;
+            
+            for(int i = ContentTab.Count()-1; i >=0; i--)
+            {
+                ContentTab.RemoveAt(i);
+            }
 
             LogInViewModel tab = this.ContentTab.FirstOrDefault(vm => vm is LogInViewModel)
                 as LogInViewModel;

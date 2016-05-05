@@ -100,9 +100,7 @@ namespace Ordination.Model.DAO
                                 d.Phone_number = reader["phone_number"].ToString();
                                 d.Birth_date = Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd");
 
-                                /* Console.WriteLine(reader["id_doctor"] + " " + reader["first_name"] + " " + reader["last_name"]
-                                     + " " + reader["address"] + " " + reader["email"] + " " + reader["phone_number"] + " " + Convert.ToDateTime(reader["Birth_date"]).ToString("yyyy-MM-dd")
-                                     + " " + reader["user_name"] + " " + reader["password"]);*/
+                                
                             }
                         }
 
@@ -177,7 +175,7 @@ namespace Ordination.Model.DAO
 
         #region ReturnAllPatients
 
-        public ObservableCollection<Patient> ReturnAllPatientsDAO()
+        public ObservableCollection<Patient> ReturnAllPatientsDAO( int id)
         {
             ObservableCollection<Patient> list = new ObservableCollection<Patient>();
             
@@ -191,7 +189,10 @@ namespace Ordination.Model.DAO
                         con.Open();
 
                         cmd.CommandText = @"SELECT * FROM patient
-                        ORDER BY first_name, last_name, birth_date";
+                        INNER JOIN chart
+                        ON fk_id_patient = id_patient
+                        WHERE
+                        fk_id_doctor = "+id+" ORDER BY first_name, last_name, birth_date";
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
@@ -236,7 +237,7 @@ namespace Ordination.Model.DAO
 
         #region ReturnAllAppointments
 
-        public ObservableCollection<Appointment> ReturnAllAppointmentsDAO( DateTime date)
+        public ObservableCollection<Appointment> ReturnAllAppointmentsDAO( DateTime date, int id_doctor)
         {
             ObservableCollection<Appointment> _list = new ObservableCollection<Appointment>();
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
@@ -253,7 +254,7 @@ namespace Ordination.Model.DAO
                                             ON appointment.fk_id_chart = chart.id_chart
                                             INNER JOIN patient
                                             ON chart.fk_id_patient = patient.id_patient
-                                            WHERE date = '"+date.ToString("yyyy-MM-dd")+"'ORDER BY date, last_name";
+                                            WHERE date = '"+date.ToString("yyyy-MM-dd")+"' AND fk_id_doctor = "+id_doctor+" ORDER BY date, last_name";
                       
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
@@ -382,7 +383,7 @@ namespace Ordination.Model.DAO
                                 
                             }
                         }
-                       // Console.WriteLine(_appointment.Symptoms+_appointment.Diagnosis+_appointment.Treatment);
+                       
                         con.Close();
                     }
                     catch (Exception ex)
@@ -419,7 +420,7 @@ namespace Ordination.Model.DAO
                         cmd.CommandText = String.Format(" INSERT INTO patient (first_name, last_name, address, email, phone_number, birth_date) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}')",
                             p.First_name, p.Last_name, p.Address, p.Email, p.Phone_number, p.Birth_date);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Patient successfully added!");
+                        MessageBox.Show("Patient successfully added!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -456,7 +457,7 @@ namespace Ordination.Model.DAO
                            d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date, d.User_name, d.Password);
 
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Doctor successfully added!");
+                        MessageBox.Show("Doctor successfully added!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -493,7 +494,7 @@ namespace Ordination.Model.DAO
                             "UPDATE doctor SET first_name = '{0}', last_name = '{1}', address = '{2}', email = '{3}', phone_number = '{4}',birth_date = '{5}' WHERE id_doctor = 1 ",
                             d.First_name, d.Last_name, d.Address, d.Email, d.Phone_number, d.Birth_date);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Doctor successfully updated!");
+                        MessageBox.Show("Doctor successfully updated!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -530,7 +531,7 @@ namespace Ordination.Model.DAO
                             "UPDATE patient SET first_name = '{0}', last_name = '{1}', address = '{2}', email = '{3}', phone_number = '{4}',birth_date = '{5}' WHERE id_patient = {6} ",
                             p.First_name, p.Last_name, p.Address, p.Email, p.Phone_number, p.Birth_date, id);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Patient successfully updated!");
+                        MessageBox.Show("Patient successfully updated!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -568,7 +569,7 @@ namespace Ordination.Model.DAO
                                             SET password = '"+newPassword+"'WHERE id_doctor = "+id+"";
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Password updated!");
+                        MessageBox.Show("Password successfully updated!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -592,7 +593,7 @@ namespace Ordination.Model.DAO
         #endregion
 
         #region AddChart
-        public void AddChartDAO( int id)
+        public void AddChartDAO( int id_chart,int id_patient)
         {
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
@@ -605,9 +606,9 @@ namespace Ordination.Model.DAO
                         cmd.CommandText = @"INSERT INTO chart
                                           (fk_id_doctor, fk_id_patient)
                                           VALUES
-                                          (1, "+id+")";
+                                          ("+id_chart+" , "+id_patient+")";
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Chart successfully added!");
+                        MessageBox.Show("Chart successfully added!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -643,7 +644,7 @@ namespace Ordination.Model.DAO
                         cmd.CommandText = String.Format("INSERT INTO appointment (fk_id_chart, symptoms, diagnosis, treatment)VALUES((SELECT chart.id_chart FROM chart INNER JOIN patient ON chart.fk_id_patient = patient.id_patient WHERE id_patient = {3}), '{0}', '{1}', '{2}')"
                             , a.Symptoms, a.Diagnosis, a.Treatment, id);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Appointment successfully added!");
+                        MessageBox.Show("Appointment successfully added!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)
@@ -662,56 +663,6 @@ namespace Ordination.Model.DAO
                     }
                 }
             }
-        }
-        #endregion
-
-        #region UserExists
-        public int UserExistsDAO(string user_name, string password)
-        {
-            int id = -1;
-            using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
-            {
-                using (SQLiteCommand cmd = new SQLiteCommand(con))
-                {
-                    try
-                    {
-                        con.Open();
-
-                        cmd.CommandText = @"SELECT * FROM doctor WHERE user_name='"+user_name+"' and password='"+password+"'";
-
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                if (reader == null)
-                                    id = -1;
-                                else
-                                    id = reader.GetInt32(0);
-
-                                Console.WriteLine(id);
-                            }
-
-                        }
-
-                        con.Close();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        MessageBox.Show(ex.Message);
-
-                    }
-                    finally
-                    {
-                        if (con.State == ConnectionState.Open)
-                        {
-                            con.Close();
-                        }
-
-                    }
-                }
-            }
-            return id;
         }
         #endregion
 
@@ -734,7 +685,7 @@ namespace Ordination.Model.DAO
                                             WHERE
                                             patient.id_patient = "+ id+"); DELETE FROM chart WHERE id_chart=(SELECT id_chart FROM chart INNER JOIN patient ON chart.fk_id_patient = patient.id_patient WHERE patient.id_patient = "+id+"); DELETE FROM patient WHERE id_patient = " + id + "";
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Patient with id=" + id + " successfully deleted!");
+                        MessageBox.Show("Patient with id=" + id + " successfully deleted!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         con.Close();
                     }
                     catch (Exception ex)

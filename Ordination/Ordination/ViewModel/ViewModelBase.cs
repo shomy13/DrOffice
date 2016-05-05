@@ -12,6 +12,7 @@ namespace Ordination.ViewModel
         public virtual string DisplayText { get; protected set; }
 
         public static int idLogedIn = 0;
+      
 
         public event PropertyChangedEventHandler PropertyChanged;
 

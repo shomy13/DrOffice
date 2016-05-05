@@ -38,7 +38,7 @@ namespace Ordination.ViewModel.User
 
         void ListView()
         {
-            _allAppointmentsList = userDao.ReturnAllAppointmentsDAO(SelectedDate);
+            _allAppointmentsList = userDao.ReturnAllAppointmentsDAO(SelectedDate, idLogedIn);
             OnPropertyChanged("AllAppointmentsList");
         }
 

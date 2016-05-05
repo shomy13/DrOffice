@@ -84,30 +84,31 @@ namespace Ordination.ViewModel.User
 
         void PasswordChange()
         {
-            int id = userDao.UserExistsDAO(User_name, Password);
+            int id = userDao.DoctorExistsDAO(User_name, Password);
 
 
-            if ( id !=-1)
+            if ( id == idLogedIn)
             {
                 if (PasswordNew != null && PasswordNewConfirm != null)
                 {
                     if (PasswordNew.Equals(PasswordNewConfirm))
                     {
                         userDao.UserChangePasswordDAO(PasswordNew, id);
+                        OnRequestClose();
                     }
                     else
                     {
-                        MessageBox.Show("Confirm password failed");
+                        MessageBox.Show("Confirm password failed", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Enter and confirm new password");
+                    MessageBox.Show("Enter and confirm new password", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
             }
             else
             {
-                MessageBox.Show("Username or password is incorrect!");
+                MessageBox.Show("Username or password is incorrect!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
         #endregion

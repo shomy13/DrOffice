@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Ordination.ViewModel.User
@@ -55,6 +56,8 @@ namespace Ordination.ViewModel.User
         void AppointmentAdd()
         {
             userDao.AddAppointmentDAO(_appointmant, pvm.returnID());
+           
+            OnRequestClose();
         }
 
         bool CanSave

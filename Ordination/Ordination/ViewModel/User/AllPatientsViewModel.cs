@@ -26,7 +26,7 @@ namespace Ordination.ViewModel.User
         private string _textSearch;
        private ObservableCollection<Patient> _allPatientList =
            // new ObservableCollection<Patient>();
-           userDao.ReturnAllPatientsDAO();
+           userDao.ReturnAllPatientsDAO(idLogedIn);
 
 
         #region Constructor
@@ -115,12 +115,12 @@ namespace Ordination.ViewModel.User
 
         public void CommandSelected(object s)
         {
-
-            _id_patient = Int32.Parse(s.ToString());
-            PatientViewModel tab = new PatientViewModel();
-             uvm.ContentTab.Add(tab);
-           uvm.SetActiveTab(tab);
-
+            
+                _id_patient = Int32.Parse(s.ToString());
+                PatientViewModel tab = new PatientViewModel();
+                uvm.ContentTab.Add(tab);
+                uvm.SetActiveTab(tab);
+         
         }
 
         public int returnId()
@@ -143,10 +143,12 @@ namespace Ordination.ViewModel.User
 
         public void PatientDelete(object s)
         {
-            int id = Int32.Parse(s.ToString());
+            
+                int id = Int32.Parse(s.ToString());
             userDao.DeletePatientDAO(id);
-            _allPatientList = userDao.ReturnAllPatientsDAO();
+            _allPatientList = userDao.ReturnAllPatientsDAO(idLogedIn);
             OnPropertyChanged("AllPatientList");
+          
         }
         #endregion
 
@@ -162,10 +164,13 @@ namespace Ordination.ViewModel.User
 
         public void Search()
         {
-            this._allPatientsView = CollectionViewSource.GetDefaultView(_allPatientList);
+            
+                this._allPatientsView = CollectionViewSource.GetDefaultView(_allPatientList);
             this._allPatientsView.Filter = FilterPatient;
             OnPropertyChanged("AllPatientList");
+           
 
+            
         }
         #endregion
 

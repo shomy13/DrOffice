@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Doctor" Height="750" Width="1333" WindowStartupLocation="CenterScreen" Background="AliceBlue"
-        >
+        Icon="folder.ico">
     <Window.Resources>
         <ResourceDictionary Source="UserViewResources.xaml"/>
     </Window.Resources>
@@ -30,14 +30,20 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
+       
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Border Width="Auto" 
                     Grid.Column="0" 
+                    Grid.Row="1"
                    Style="{StaticResource BorderStyle}"
                     >
                 <StackPanel Margin="5,10">
@@ -54,15 +60,19 @@
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="2" Width="Auto" Style="{StaticResource BorderStyle}">
+            <Border Grid.Column="2" Grid.Row="1" Width="Auto" Style="{StaticResource BorderStyle}">
                 <HeaderedContentControl
                     Content="{Binding Path=ContentTab}"
                     ContentTemplate="{StaticResource TabTemplate}"
                     Header="Doctors office"
                     Style="{StaticResource HeaderStyle}"
                     Margin="2"
+                    
                     />
             </Border>
+            <StackPanel Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding LogedInDoctor}" Margin="15,0"/>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>
